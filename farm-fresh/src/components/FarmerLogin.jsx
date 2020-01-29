@@ -63,7 +63,6 @@ const Login = (props) => {
         .then(res => {
         localStorage.setItem('token', res.data.payload);
         console.log(res)
-        console.log(res.data.payload)
         props.history.push('/');
     
         })
@@ -88,7 +87,7 @@ const Login = (props) => {
 
             { loading.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :
             <FormWrap>
-                <h4>Welcome! Please log in to proceed.</h4>
+                <h4>Welcome! Please log in to sell your produce!</h4>
             <form onSubmit={login}>
                 <input 
                 name='username'
@@ -107,14 +106,7 @@ const Login = (props) => {
                 <button type='submit'>Log In!</button>
             </form>
             </FormWrap> }
-
-            
-            
-
-            
-
-            
-            
+ 
         </div>
     );
 }

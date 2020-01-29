@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-// import { axiosWithAuth } from '../tools/axiosAuth';
+import { axiosWithAuth } from '../tools/axiosAuth';
 import styled from 'styled-components';
 import Load from './Loader';
 
@@ -51,27 +51,26 @@ const Registration = (props) => {
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
-        email: ''
+        
     });
 
     const [loading, setLoading] = useState({
         isLoading: false
     })
 
-    const login = e => {
-        // e.preventDefault();
-        // axiosWithAuth().post('http://localhost:5000/api/login', credentials)
-        // .then(res => {
-        // localStorage.setItem('token', res.data.payload);
-        // console.log(res)
-        // props.history.push('/frenz');
+    const register = e => {
+        e.preventDefault();
+        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/register', credentials)
+        .then(res => {
+        console.log(res)
+        props.history.push('/login');
     
-        // })
-        // setLoading({...loading,isLoading: true})
-        // setTimeout(()=> {
-        //     setLoading({...loading,isLoading: false})
-        // },3000)
-        // console.log(credentials)
+        })
+        setLoading({...loading,isLoading: true})
+        setTimeout(()=> {
+            setLoading({...loading,isLoading: false})
+        },3000)
+        console.log(credentials)
     }
 
     const handleChange = e => {
@@ -86,10 +85,10 @@ const Registration = (props) => {
         <div>
             
 
-            { credentials.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :
+            { loading.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :
             <FormWrap>
                 <h4>Register here to get access to farm fresh produce!</h4>
-            <form onSubmit={login}>
+            <form onSubmit={register}>
                 <input 
                 name='username'
                 value={credentials.username}
@@ -97,12 +96,12 @@ const Registration = (props) => {
                 placeholder='Username'
                 onChange={handleChange}/>
 
-            <input 
+            {/* <input 
                 name='email'
                 value={credentials.email}
                 type="text"
                 placeholder='Email'
-                onChange={handleChange}/>
+                onChange={handleChange}/> */}
 
                 <input 
                 name='password'

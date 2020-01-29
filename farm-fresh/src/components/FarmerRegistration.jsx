@@ -46,25 +46,24 @@ button {
 }
 `
 
-const Login = (props) => {
+const Registration = (props) => {
 
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
+        
     });
 
     const [loading, setLoading] = useState({
         isLoading: false
     })
 
-    const login = e => {
+    const register = e => {
         e.preventDefault();
-        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/login', credentials)
+        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/register', credentials)
         .then(res => {
-        localStorage.setItem('token', res.data.payload);
         console.log(res)
-        console.log(res.data.payload)
-        props.history.push('/');
+        props.history.push('/login');
     
         })
         setLoading({...loading,isLoading: true})
@@ -88,14 +87,21 @@ const Login = (props) => {
 
             { loading.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :
             <FormWrap>
-                <h4>Welcome! Please log in to proceed.</h4>
-            <form onSubmit={login}>
+                <h4>Register here to sell your farm fresh produce!</h4>
+            <form onSubmit={register}>
                 <input 
                 name='username'
                 value={credentials.username}
                 type="text"
                 placeholder='Username'
                 onChange={handleChange}/>
+
+            {/* <input 
+                name='email'
+                value={credentials.email}
+                type="text"
+                placeholder='Email'
+                onChange={handleChange}/> */}
 
                 <input 
                 name='password'
@@ -104,7 +110,7 @@ const Login = (props) => {
                 placeholder='Password'
                 onChange={handleChange}/>
 
-                <button type='submit'>Log In!</button>
+                <button type='submit'>Register!</button>
             </form>
             </FormWrap> }
 
@@ -119,4 +125,4 @@ const Login = (props) => {
     );
 }
 
-export default Login;
+export default Registration;
