@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { axiosWithAuth } from '../tools/axiosAuth';
 import styled from 'styled-components';
 import Load from './Loader';
+import cows from '../img/cows.jpg';
+import '../App.css';
 
 
 const FormWrap = styled.div`
-background-color: white;
-width: 20em;
-border-radius: 8px;
+
+width: 100%;
 height: 35em;
-margin: 0 auto;
-padding: 3%;
 display: flex;
 flex-direction: column;
 align-items: center;
@@ -83,7 +82,7 @@ const Login = (props) => {
     }
 
     return (
-        <div>
+        <div className='pasture'>
             
 
             { loading.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :

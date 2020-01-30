@@ -2,3 +2,14 @@
   background: url('./img/gwapes.jpg')no-repeat center;
   background-size: cover;
 }
+
+.pasture {
+  background: url('./img//cows.jpg')no-repeat center;
+  background-size: cover;
+  height: 99vh;
+}
+.field {
+  background: url('./img//milling.jpg')no-repeat center;
+  background-size: cover;
+  height: 99vh;
+}

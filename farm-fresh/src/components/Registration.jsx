@@ -3,10 +3,13 @@ import { axiosWithAuth } from '../tools/axiosAuth';
 import axios from 'axios';
 import styled from 'styled-components';
 import Load from './Loader';
+import '../App.css';
 
 
 const FormWrap = styled.div`
-background-color: white;
+background-color: rgba(0,0,0,.3);
+color: white;
+text-shadow: 2px 2px 2px #111;
 width: 20em;
 border-radius: 8px;
 height: 35em;
@@ -23,6 +26,7 @@ h4 {
     
 }
 form {
+    margin-top: 5em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -83,7 +87,7 @@ const Registration = (props) => {
     }
 
     return (
-        <div>
+        <div className='field'>
             
 
             { loading.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :
