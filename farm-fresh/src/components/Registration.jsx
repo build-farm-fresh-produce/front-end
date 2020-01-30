@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { axiosWithAuth } from '../tools/axiosAuth';
+import axios from 'axios';
 import styled from 'styled-components';
 import Load from './Loader';
 
@@ -60,7 +61,7 @@ const Registration = (props) => {
 
     const register = e => {
         e.preventDefault();
-        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/register', credentials)
+        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
         .then(res => {
         console.log(res)
         props.history.push('/login');

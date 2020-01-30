@@ -59,12 +59,12 @@ const Login = (props) => {
 
     const login = e => {
         e.preventDefault();
-        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/login', credentials)
+        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
         .then(res => {
-        localStorage.setItem('token', res.data.payload);
+        localStorage.setItem('token', res.data.token);
         console.log(res)
-        console.log(res.data.payload)
-        props.history.push('/');
+        console.log(res.data.token)
+        props.history.push('/farms');
     
         })
         setLoading({...loading,isLoading: true})

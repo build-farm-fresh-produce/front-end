@@ -10,7 +10,7 @@ const Load = () => {
             color="#00BFFF"
             height={100}
             width={100}
-            timeout={3000} //3 secs
+            timeout={2000} //2 secs
 
             />
         </div>
