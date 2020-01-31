@@ -56,6 +56,11 @@ const Login = (props) => {
         isLoading: false
     })
 
+    const [validation, useValidation] = useState({
+        usernameVal: false,
+        passwordVal: false,
+    })
+
     const login = e => {
         e.preventDefault();
         axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
@@ -63,7 +68,7 @@ const Login = (props) => {
         localStorage.setItem('token', res.data.token);
         console.log(res)
         console.log(res.data.token)
-        props.history.push('/farms');
+        props.history.push('/Products');
     
         })
         setLoading({...loading,isLoading: true})
@@ -79,6 +84,10 @@ const Login = (props) => {
             [e.target.name]: e.target.value
         })
         console.log(credentials)
+    }
+
+    const handleBlur = (e) => {
+        
     }
 
     return (
