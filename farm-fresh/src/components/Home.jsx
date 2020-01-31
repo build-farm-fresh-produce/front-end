@@ -52,15 +52,15 @@ const Home = () => {
             <h4>You've come to the best place for stuff like Veggies!</h4>
             <div className="buttons">
                 <div className="logins">
-                    <h5>Login</h5>
-                    <Link to='/login-user'><button>As User</button></Link>
-                    <Link to='/login-farmer'><button>As Farmer</button></Link>
+                    
+                    <Link to='/login-user'><button>Log In</button></Link>
+                    
                     
                 </div>
                 <div className="registers">
-                    <h5>Register</h5>
-                    <Link to='/register-user'><button>As User</button></Link>
-                    <Link to='/register-farmer'><button>As Farmer</button></Link>
+                    
+                    <Link to='/register-user'><button>Register</button></Link>
+                    
                     
                 </div>
                     
