@@ -20,9 +20,9 @@ function App() {
       
       <Route exact  path='/' component={Home} />
       <Route  path='/login-user' component={Login} />
-      <Route  path='/login-farmer' component={FarmerLogin} />
+      {/* <Route  path='/login-farmer' component={FarmerLogin} /> */}
       <Route  path='/register-user' component={Registration} />
-      <Route  path='/register-farmer' component={FarmerRegistration} />
+      {/* <Route  path='/register-farmer' component={FarmerRegistration} /> */}
       <Route  path='/products' component={Products} />
     
       </div>

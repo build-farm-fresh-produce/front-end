@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { axiosWithAuth } from '../tools/axiosAuth';
-import axios from 'axios';
+
 import styled from 'styled-components';
 import Load from './Loader';
 import '../App.css';
@@ -63,27 +63,61 @@ const Registration = (props) => {
         isLoading: false
     })
 
+    const [validation, setValidation] = useState({
+        usernameVal: false,
+        passwordVal: false,
+    })
+
     const register = e => {
         e.preventDefault();
-        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
-        .then(res => {
-        console.log(res)
-        props.history.push('/login');
-    
-        })
-        setLoading({...loading,isLoading: true})
-        setTimeout(()=> {
-            setLoading({...loading,isLoading: false})
-        },3000)
-        console.log(credentials)
+        if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
+            setValidation({...validation,usernameVal: true,passwordVal: true})
+            
+        }else {
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
+            .then(res => {
+            localStorage.setItem('token', res.data.token);
+            console.log(res)
+            console.log(res.data.token)
+            props.history.push('/login');
+        
+            })
+            setLoading({...loading,isLoading: true})
+            setTimeout(()=> {
+                setLoading({...loading,isLoading: false})
+            },3000)
+            console.log(credentials)
+        }
     }
-
     const handleChange = e => {
         setCredentials({
             ...credentials,
             [e.target.name]: e.target.value
         })
         console.log(credentials)
+    }
+
+    const validateUserName = (e) => {
+
+        if(credentials.username === '') {
+            setValidation({...validation,usernameVal: true})
+        }else {
+            setValidation({...validation,usernameVal: false})
+        }
+        
+        
+    }
+
+    const validatePassword = (e) => {
+
+        if(credentials.password === '') {
+            setValidation({...validation,passwordVal: true})
+        }else{
+            setValidation({...validation,passwordVal: false})
+
+        }
+        
+        
     }
 
     return (
@@ -99,7 +133,9 @@ const Registration = (props) => {
                 value={credentials.username}
                 type="text"
                 placeholder='Username'
-                onChange={handleChange}/>
+                onChange={handleChange}
+                onBlur ={validateUserName}/>
+                {validation.usernameVal ? <p>You need a username!</p> : '' }
 
             {/* <input 
                 name='email'
@@ -113,7 +149,9 @@ const Registration = (props) => {
                 value={credentials.password}
                 type="text"
                 placeholder='Password'
-                onChange={handleChange}/>
+                onChange={handleChange}
+                onBlur ={validatePassword}/>
+                {validation.passwordVal ? <p>You need a password!</p> : '' }
 
                 <button type='submit'>Register!</button>
             </form>
