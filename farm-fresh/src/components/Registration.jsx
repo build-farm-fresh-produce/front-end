@@ -77,16 +77,20 @@ const Registration = (props) => {
             axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
             .then(res => {
             localStorage.setItem('token', res.data.token);
-            console.log(res)
-            console.log(res.data.token)
+            // console.log(res)
+            // console.log(res.data.token)
             props.history.push('/login');
-        
-            })
+            
             setLoading({...loading,isLoading: true})
             setTimeout(()=> {
                 setLoading({...loading,isLoading: false})
-            },3000)
+            },2000)
             console.log(credentials)
+            .catch(err => {
+                console.log(err)
+            })
+        
+            })
         }
     }
     const handleChange = e => {

@@ -3,8 +3,7 @@ import './App.css';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Home from './components/Home';
-import FarmerLogin from './components/FarmerLogin';
-import FarmerRegistration from './components/FarmerRegistration';
+import Navigation from './components/Navigation';
 import Products from './components/Products';
 import  { Route, Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -12,18 +11,27 @@ import { BrowserRouter as Router } from 'react-router-dom';
 
 
 function App() {
+
+  const PrivateRoute = ({ component: Products, ...rest }) => (
+    <Route {...rest} render={(props) => 
+        localStorage.getItem('token') ? (
+            <Products {...props} />
+        ) : (
+            <Redirect to='/login-user' />
+        )
+    } />
+)
+
   return (
     <Router>
       <div className="App">
-      <Link to='/'>Home</Link>
+      <Navigation/>
       
       
       <Route exact  path='/' component={Home} />
       <Route  path='/login-user' component={Login} />
-      {/* <Route  path='/login-farmer' component={FarmerLogin} /> */}
       <Route  path='/register-user' component={Registration} />
-      {/* <Route  path='/register-farmer' component={FarmerRegistration} /> */}
-      <Route  path='/products' component={Products} />
+      <PrivateRoute  path='/products' component={Products} />
     
       </div>
     </Router>

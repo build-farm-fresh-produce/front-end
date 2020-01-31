@@ -75,13 +75,17 @@ const Login = (props) => {
             console.log(res)
             console.log(res.data.token)
             props.history.push('/products');
-        
-            })
             setLoading({...loading,isLoading: true})
             setTimeout(()=> {
                 setLoading({...loading,isLoading: false})
-            },3000)
+            },2000)
             console.log(credentials)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            
+            
         }
         
     }
