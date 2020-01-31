@@ -11,5 +11,5 @@
 .field {
   background: url('./img//milling.jpg')no-repeat center;
   background-size: cover;
-  height: 99vh;
+  height: 100%;
 }

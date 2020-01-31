@@ -12,7 +12,7 @@ color: white;
 text-shadow: 2px 2px 2px #111;
 width: 20em;
 border-radius: 8px;
-height: 35em;
+
 margin: 0 auto;
 padding: 3%;
 display: flex;
@@ -32,11 +32,14 @@ form {
     align-items: center;
     justify-content: center;
     input {
-        margin: 1.5em 0em;
+        
         height: 2em;
         font-size: 1.3em;
         border-radius 8px;
         font-family: 'Gelasio', serif;
+    }
+    .userInput {
+        margin: 1.5em 0;
     }
 }
 button {
@@ -56,6 +59,7 @@ const Registration = (props) => {
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
+        ifFarmer: false,
         
     });
 
@@ -112,6 +116,11 @@ const Registration = (props) => {
         
     }
 
+    const handleCheck = (e) => {
+        setCredentials({...credentials,isFarmer: !credentials.isFarmer})
+        console.log(credentials)
+    }
+
     const validatePassword = (e) => {
 
         if(credentials.password === '') {
@@ -134,28 +143,30 @@ const Registration = (props) => {
             <form onSubmit={register}>
                 <input 
                 name='username'
+                className='userInput'
                 value={credentials.username}
                 type="text"
                 placeholder='Username'
                 onChange={handleChange}
                 onBlur ={validateUserName}/>
                 {validation.usernameVal ? <p>You need a username!</p> : '' }
-
-            {/* <input 
-                name='email'
-                value={credentials.email}
-                type="text"
-                placeholder='Email'
-                onChange={handleChange}/> */}
-
+                
+            
                 <input 
                 name='password'
                 value={credentials.password}
-                type="text"
+                type="password"
                 placeholder='Password'
                 onChange={handleChange}
                 onBlur ={validatePassword}/>
                 {validation.passwordVal ? <p>You need a password!</p> : '' }
+                <h4>Are you a farmer?</h4>
+                <input 
+                name='isFarmer'
+                value={credentials.isFarmer}
+                type="checkbox"
+                onChange={handleCheck}/>
+                {credentials.isFarmer ? <h1>Farm Form will go here!</h1> : '' }
 
                 <button type='submit'>Register!</button>
             </form>
