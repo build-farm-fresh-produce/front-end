@@ -2,33 +2,32 @@ export const ADD_PRODUCT = 'ADD_PRODUCT';
 export const UPDATE_CART = 'UPDATE_CART';
 export const DELETE_FROM_CART = 'DELETE_FROM_CART';
 
-export const addProduct = (product, quantity, unitCost) => {
+export const addProduct = (product_name, quantity, price) => {
     return {
         type: ADD_PRODUCT,
         payload: {
-            product,
+            product_name,
             quantity,
-            unitCost
+            price
         }
     };
 };
 
-export const updateCart = (product, quantity, unitCost) => {
+export const updateCart = (id, quantity) => {
     return {
         type: UPDATE_CART,
         payload: {
-            product,
-            quantity,
-            unitCost
+            id,
+            quantity
         }
     };
 };
 
-export const deleteFromCart = (product) => {
+export const deleteFromCart = (id) => {
     return {
         type: DELETE_FROM_CART,
         payload: {
-            product
+            id
         }
     };
 };

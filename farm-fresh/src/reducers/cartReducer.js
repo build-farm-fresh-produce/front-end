@@ -12,14 +12,17 @@ export const cartReducer = (state =  initialState, action) => {
                 cart: [...state.cart, action.payload]
             };
         case UPDATE_CART:
+            let product = state.cart.find(item => item.id === action.payload.id);
+            let newCart = state.cart.filter(item => item.id !== action.payload.id);
+            product.quantity = action.payload.quantity;
             return {
                 ...state,
-                cart: state.cart.map(item => item.product === action.payload.product ? action.payload : item)
+                cart: newCart
             };
         case DELETE_FROM_CART:
             return {
                 ...state,
-                cart: state.cart.filter(item => item.product !== action.payload.product)
+                cart: state.cart.filter(item => item.id !== action.payload.id)
             };
         default:
             return state;
