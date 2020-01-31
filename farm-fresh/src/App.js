@@ -1,12 +1,11 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Home from './components/Home';
 import FarmerLogin from './components/FarmerLogin';
 import FarmerRegistration from './components/FarmerRegistration';
-import Farms from './components/Farms';
+import Products from './components/Products';
 import  { Route, Link, Redirect } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
 
@@ -24,7 +23,7 @@ function App() {
       <Route  path='/login-farmer' component={FarmerLogin} />
       <Route  path='/register-user' component={Registration} />
       <Route  path='/register-farmer' component={FarmerRegistration} />
-      <Route  path='/farms' component={Farms} />
+      <Route  path='/products' component={Products} />
     
       </div>
     </Router>
