@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { axiosWithAuth } from '../tools/axiosAuth';
 import styled from 'styled-components';
 import Load from './Loader';
-import cows from '../img/cows.jpg';
 import '../App.css';
 
 
 const FormWrap = styled.div`
-
-width: 100%;
+background-color: rgba(0,0,0,.3);
+color: white;
+text-shadow: 2px 2px 2px #111;
+width: 20em;
+margin: 0 auto;
+padding: 3%;
 height: 35em;
 display: flex;
 flex-direction: column;
@@ -56,26 +59,37 @@ const Login = (props) => {
         isLoading: false
     })
 
-    const [validation, useValidation] = useState({
+    const [validation, setValidation] = useState({
         usernameVal: false,
         passwordVal: false,
     })
 
     const login = e => {
         e.preventDefault();
-        axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
-        .then(res => {
-        localStorage.setItem('token', res.data.token);
-        console.log(res)
-        console.log(res.data.token)
-        props.history.push('/Products');
-    
-        })
-        setLoading({...loading,isLoading: true})
-        setTimeout(()=> {
-            setLoading({...loading,isLoading: false})
-        },3000)
-        console.log(credentials)
+        if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
+            setValidation({...validation,usernameVal: true,passwordVal: true})
+        }else {
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
+            .then(res => {
+            localStorage.setItem('token', res.data.token);
+            console.log(res)
+            console.log(res.data.token)
+            props.history.push('/products');
+            
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            setLoading({...loading,isLoading: true})
+            setTimeout(()=> {
+                setLoading({...loading,isLoading: false})
+            },2000)
+            console.log(credentials)
+            
+            
+            
+        }
+        
     }
 
     const handleChange = e => {
@@ -86,9 +100,32 @@ const Login = (props) => {
         console.log(credentials)
     }
 
-    const handleBlur = (e) => {
+    const validateUserName = (e) => {
+
+        if(credentials.username === '') {
+            setValidation({...validation,usernameVal: true})
+        }else {
+            setValidation({...validation,usernameVal: false})
+        }
+        
         
     }
+
+    const validatePassword = (e) => {
+
+        if(credentials.password === '') {
+            setValidation({...validation,passwordVal: true})
+        }else{
+            setValidation({...validation,passwordVal: false})
+
+        }
+        
+        
+    }
+
+    
+
+    
 
     return (
         <div className='pasture'>
@@ -103,14 +140,18 @@ const Login = (props) => {
                 value={credentials.username}
                 type="text"
                 placeholder='Username'
-                onChange={handleChange}/>
+                onChange={handleChange}
+                onBlur ={validateUserName}/>
+                {validation.usernameVal ? <p>You need a username!</p> : '' }
 
                 <input 
                 name='password'
                 value={credentials.password}
-                type="text"
+                type="password"
                 placeholder='Password'
-                onChange={handleChange}/>
+                onChange={handleChange}
+                onBlur = {validatePassword}/>
+                 {validation.passwordVal ? <p>You need a password!</p> : '' }
 
                 <button type='submit'>Log In!</button>
             </form>

@@ -9,7 +9,7 @@ const Products = () => {
     const [products, updateProducts] = useState([]);
     
     useEffect(()=> {
-        axiosWithAuth().get('https://farm-fresh-produce-api.herokuapp.com/api/products/')
+        axiosWithAuth().get('https://farm-fresh-produce-api.herokuapp.com/api/farms/')
         .then(res => {
             console.log(res)
             updateProducts(res.data)
