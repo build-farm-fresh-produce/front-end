@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { axiosWithAuth } from '../tools/axiosAuth';
 
+import FarmForm from './FarmForm';
 import styled from 'styled-components';
 import Load from './Loader';
 import '../App.css';
+
 
 
 const FormWrap = styled.div`
@@ -12,7 +14,7 @@ color: white;
 text-shadow: 2px 2px 2px #111;
 width: 20em;
 border-radius: 8px;
-height: 35em;
+
 margin: 0 auto;
 padding: 3%;
 display: flex;
@@ -32,11 +34,14 @@ form {
     align-items: center;
     justify-content: center;
     input {
-        margin: 1.5em 0em;
+        
         height: 2em;
         font-size: 1.3em;
         border-radius 8px;
         font-family: 'Gelasio', serif;
+    }
+    .userInput {
+        margin: 1.5em 0;
     }
 }
 button {
@@ -56,8 +61,10 @@ const Registration = (props) => {
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
+        is_farmer: 'n',
         
     });
+
 
     const [loading, setLoading] = useState({
         isLoading: false
@@ -66,27 +73,73 @@ const Registration = (props) => {
     const [validation, setValidation] = useState({
         usernameVal: false,
         passwordVal: false,
+        isFarmer: false,
     })
+
+    const [farmDetails, updateFarmDetails]= useState({
+        farm_name: '',
+        owner_id:  0,
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        phone_number: '',
+        email: '',
+    })
+    const [newFarms, addNewFarms]= useState();
 
     const register = e => {
         e.preventDefault();
         if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
             setValidation({...validation,usernameVal: true,passwordVal: true})
             
-        }else {
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
+        }else if(validation.isFarmer){
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
             .then(res => {
             localStorage.setItem('token', res.data.token);
-            console.log(res)
+            updateFarmDetails({...farmDetails,owner_id: res.data.id})
             console.log(res.data.token)
-            props.history.push('/login');
-        
+            console.log('res.data.id',res.data.id)
+            console.log('owner_id',farmDetails.owner_id);
+            
+            console.log(farmDetails)
+            // console.log(res.data.token)
+            
+  
+            console.log(credentials)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/farms', newFarms)
+            .then(response => {
+                console.log(response)
+            })
+            .catch(error => {
+                console.log(error)
+            })
+
+            setLoading({...loading,isLoading: true})
+            setTimeout(()=> {
+                setLoading({...loading,isLoading: false})
+            },2000)
+            props.history.push('/login-user');
+
+        }else {
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
+            .then(res => {
+            localStorage.setItem('token', res.data.token);
+            props.history.push('/login-user');
+            
+            
+            console.log(credentials)
+            
             })
             setLoading({...loading,isLoading: true})
             setTimeout(()=> {
                 setLoading({...loading,isLoading: false})
-            },3000)
-            console.log(credentials)
+            },2000)
         }
     }
     const handleChange = e => {
@@ -95,6 +148,7 @@ const Registration = (props) => {
             [e.target.name]: e.target.value
         })
         console.log(credentials)
+        console.log(newFarms)
     }
 
     const validateUserName = (e) => {
@@ -106,6 +160,12 @@ const Registration = (props) => {
         }
         
         
+    }
+
+    const handleCheck = (e) => {
+        setValidation({...validation,isFarmer: !validation.isFarmer})
+        setCredentials({...credentials,is_farmer: 'y'})
+        console.log(credentials)
     }
 
     const validatePassword = (e) => {
@@ -130,31 +190,37 @@ const Registration = (props) => {
             <form onSubmit={register}>
                 <input 
                 name='username'
+                className='userInput'
                 value={credentials.username}
                 type="text"
                 placeholder='Username'
                 onChange={handleChange}
                 onBlur ={validateUserName}/>
                 {validation.usernameVal ? <p>You need a username!</p> : '' }
-
-            {/* <input 
-                name='email'
-                value={credentials.email}
-                type="text"
-                placeholder='Email'
-                onChange={handleChange}/> */}
-
+                
+            
                 <input 
                 name='password'
                 value={credentials.password}
-                type="text"
+                type="password"
                 placeholder='Password'
                 onChange={handleChange}
                 onBlur ={validatePassword}/>
                 {validation.passwordVal ? <p>You need a password!</p> : '' }
-
+                <h4>Are you a farmer?</h4>
+                <input 
+                name='isFarmer'
+                value={credentials.isFarmer}
+                type="checkbox"
+                onChange={handleCheck}/>
+                {validation.isFarmer ? <FarmForm 
+                                        newFarms={newFarms}
+                                        addNewFarms={addNewFarms}
+                                        farmDetails={farmDetails}
+                                        updateFarmDetails={updateFarmDetails}/> : '' }
                 <button type='submit'>Register!</button>
             </form>
+            
             </FormWrap> }
 
             

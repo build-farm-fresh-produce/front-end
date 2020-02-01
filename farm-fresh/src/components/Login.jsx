@@ -75,13 +75,19 @@ const Login = (props) => {
             console.log(res)
             console.log(res.data.token)
             props.history.push('/products');
-        
+            
+            })
+            .catch(err => {
+                console.log(err);
             })
             setLoading({...loading,isLoading: true})
             setTimeout(()=> {
                 setLoading({...loading,isLoading: false})
-            },3000)
+            },2000)
             console.log(credentials)
+            
+            
+            
         }
         
     }
@@ -141,7 +147,7 @@ const Login = (props) => {
                 <input 
                 name='password'
                 value={credentials.password}
-                type="text"
+                type="password"
                 placeholder='Password'
                 onChange={handleChange}
                 onBlur = {validatePassword}/>
