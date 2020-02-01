@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { axiosWithAuth } from '../tools/axiosAuth';
-
+import FarmForm from './FarmForm';
 import styled from 'styled-components';
 import Load from './Loader';
 import '../App.css';
+
 
 
 const FormWrap = styled.div`
@@ -59,9 +60,10 @@ const Registration = (props) => {
     const [credentials, setCredentials] = useState({
         username: '',
         password: '',
-        ifFarmer: false,
+        is_farmer: 'n',
         
     });
+
 
     const [loading, setLoading] = useState({
         isLoading: false
@@ -70,31 +72,60 @@ const Registration = (props) => {
     const [validation, setValidation] = useState({
         usernameVal: false,
         passwordVal: false,
+        isFarmer: false,
     })
+
+    const [farmDetails, updateFarmDetails]= useState({
+        farm_name: '',
+        owner_id:  '',
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        phone_number: '',
+        email: '',
+    })
+    const [newFarms, addNewFarms]= useState();
 
     const register = e => {
         e.preventDefault();
         if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
             setValidation({...validation,usernameVal: true,passwordVal: true})
             
-        }else {
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
+        }else if(validation.isFarmer){
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
             .then(res => {
             localStorage.setItem('token', res.data.token);
-            // console.log(res)
+            updateFarmDetails({...farmDetails,owner_id: res.data.username})
+            console.log(farmDetails.owner_id)
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/farms', newFarms)
+            console.log(res)
             // console.log(res.data.token)
-            props.history.push('/login');
+            props.history.push('/login-user');
             
+            
+            console.log(credentials)
+            
+            })
             setLoading({...loading,isLoading: true})
             setTimeout(()=> {
                 setLoading({...loading,isLoading: false})
             },2000)
+
+        }else {
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
+            .then(res => {
+            localStorage.setItem('token', res.data.token);
+            props.history.push('/login-user');
+            
+            
             console.log(credentials)
-            .catch(err => {
-                console.log(err)
+            
             })
-        
-            })
+            setLoading({...loading,isLoading: true})
+            setTimeout(()=> {
+                setLoading({...loading,isLoading: false})
+            },2000)
         }
     }
     const handleChange = e => {
@@ -103,6 +134,7 @@ const Registration = (props) => {
             [e.target.name]: e.target.value
         })
         console.log(credentials)
+        console.log(newFarms)
     }
 
     const validateUserName = (e) => {
@@ -117,7 +149,8 @@ const Registration = (props) => {
     }
 
     const handleCheck = (e) => {
-        setCredentials({...credentials,isFarmer: !credentials.isFarmer})
+        setValidation({...validation,isFarmer: !validation.isFarmer})
+        setCredentials({...credentials,is_farmer: 'y'})
         console.log(credentials)
     }
 
@@ -166,10 +199,14 @@ const Registration = (props) => {
                 value={credentials.isFarmer}
                 type="checkbox"
                 onChange={handleCheck}/>
-                {credentials.isFarmer ? <h1>Farm Form will go here!</h1> : '' }
-
+                {validation.isFarmer ? <FarmForm 
+                                        newFarms={newFarms}
+                                        addNewFarms={addNewFarms}
+                                        farmDetails={farmDetails}
+                                        updateFarmDetails={updateFarmDetails}/> : '' }
                 <button type='submit'>Register!</button>
             </form>
+            
             </FormWrap> }
 
             
