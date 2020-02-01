@@ -104,7 +104,7 @@ const Registration = (props) => {
             
             console.log(farmDetails)
             // console.log(res.data.token)
-            // props.history.push('/login-user');
+            
   
             console.log(credentials)
             })
@@ -124,6 +124,7 @@ const Registration = (props) => {
             setTimeout(()=> {
                 setLoading({...loading,isLoading: false})
             },2000)
+            props.history.push('/login-user');
 
         }else {
             axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
