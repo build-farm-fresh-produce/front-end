@@ -1,41 +1,50 @@
-import React, {useState,useEffect} from 'react';
-import { axiosWithAuth } from '../tools/axiosAuth';
+import React, { useEffect } from 'react';
+import { connect } from 'react-redux';
+import { fetchProducts } from '../redux/products/productActions';
 import Product from './Product';
 import Load from './Loader';
 
 
-const Products = () => {
+function Products({ productData, fetchProducts }) {
+    useEffect(() => {
+        fetchProducts()
+    }, [])
 
-    const [products, updateProducts] = useState([]);
-    
-    useEffect(()=> {
-        axiosWithAuth().get('https://farm-fresh-produce-api.herokuapp.com/api/farms/')
-        .then(res => {
-            console.log(res)
-            updateProducts(res.data)
-        })
-        .catch(err => {
-            console.log(err);
-        })
-    },[])
-    return (
+    return productData.loading ? (
+        <Load />
+    ) : productData.error ? (
+        <h2>{productData.error}</h2>
+    ) : (
         <div>
-            {
-                products.length ? products.map(item => {
-                    return(
+            <h2>Available Products</h2>
+            <div>
+                {productData &&
+                    productData.products &&
+                    productData.products.map(product =>
                         <Product
-                        name={item.product_name}
-                        image={item.image_url}
-                        description={item.description}
-                         />
-                    )
-                }) :    <Load/>
-                
-            
-            }
-            
+                            name={product.product_name}
+                            image={product.image_url}
+                            description={product.description} 
+                            price={product.price}   
+                        />)}
+            </div>
         </div>
     );
-}
+};
 
-export default Products;
+const mapStateToProps = state => {
+    return {
+        productData: state.product
+    };
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchProducts: () => dispatch(fetchProducts())
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(Products);
