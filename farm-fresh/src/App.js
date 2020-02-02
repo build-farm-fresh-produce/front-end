@@ -3,7 +3,6 @@ import './App.css';
 import Login from './components/Login';
 import Registration from './components/Registration';
 import Home from './components/Home';
-import Navigation from './components/Navigation';
 import Products from './components/Products';
 import Cart from './components/Cart';
 import  { Route, Link, Redirect } from 'react-router-dom';
@@ -26,9 +25,7 @@ function App() {
   return (
     <Router>
       <div className="App">
-      <Navigation/>
-      
-      
+
       <Route exact  path='/' component={Home} />
       <Route  path='/login-user' component={Login} />
       <Route  path='/register-user' component={Registration} />

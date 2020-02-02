@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { removeFromCart } from '../redux/cart/cartActions';
+import Navigation from './Navigation';
 
 function Cart({ cart, removeFromCart }) {
     // console.log(cart);
@@ -22,6 +23,7 @@ function Cart({ cart, removeFromCart }) {
     )
     return (
         <div className='cart'>
+            <Navigation />
             <h2>You have added:</h2>
             <ul>
                 {addedItems}

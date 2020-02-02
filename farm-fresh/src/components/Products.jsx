@@ -4,6 +4,7 @@ import { fetchProducts } from '../redux/products/productActions';
 import { addToCart } from '../redux/cart/cartActions';
 import Product from './Product';
 import Load from './Loader';
+import Navigation from './Navigation';
 
 
 function Products({ productData, fetchProducts, addToCart, cart }) {
@@ -17,6 +18,7 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
         <h2>{productData.error}</h2>
     ) : (
         <div>
+            <Navigation />
             <h2>Available Products</h2>
             <div>
                 {productData &&
