@@ -5,7 +5,7 @@ import Product from './Product';
 import Load from './Loader';
 
 
-function Products({ productData, fetchProducts }) {
+function Products({ productData, fetchProducts, addToCart }) {
     useEffect(() => {
         fetchProducts()
     }, [])
@@ -21,12 +21,8 @@ function Products({ productData, fetchProducts }) {
                 {productData &&
                     productData.products &&
                     productData.products.map(product =>
-                        <Product
-                            name={product.product_name}
-                            image={product.image_url}
-                            description={product.description} 
-                            price={product.price}   
-                        />)}
+                        <Product product={product} />)
+                }
             </div>
         </div>
     );
