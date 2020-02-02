@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { fetchProducts } from '../redux/products/productActions';
+import { addToCart } from '../redux/cart/cartActions';
 import Product from './Product';
 import Load from './Loader';
 
 
-function Products({ productData, fetchProducts, addToCart }) {
+function Products({ productData, fetchProducts, addToCart, cart }) {
     useEffect(() => {
         fetchProducts()
     }, [])
@@ -20,9 +21,16 @@ function Products({ productData, fetchProducts, addToCart }) {
             <div>
                 {productData &&
                     productData.products &&
-                    productData.products.map(product =>
-                        <Product product={product} />)
+                    productData.products.map(product => {
+                        return (
+                            <>
+                                <Product product={product} />
+                                <button onClick={() => addToCart(product)}>Add To Cart</button>
+                            </>
+                        )  
+                    })
                 }
+                {console.log(cart)}
             </div>
         </div>
     );
@@ -30,13 +38,15 @@ function Products({ productData, fetchProducts, addToCart }) {
 
 const mapStateToProps = state => {
     return {
-        productData: state.product
+        productData: state.product,
+        cart: state.cart
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchProducts: () => dispatch(fetchProducts())
+        fetchProducts: () => dispatch(fetchProducts()),
+        addToCart: product => dispatch(addToCart(product))
     };
 };
 

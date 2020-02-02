@@ -1,4 +1,3 @@
-// import { axiosWithAuth } from '../../tools/axiosAuth';
 import {
     ADD_TO_CART
 } from './cartTypes';
