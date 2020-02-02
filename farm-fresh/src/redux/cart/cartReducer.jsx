@@ -1,7 +1,7 @@
 import {
     ADD_TO_CART,
     REMOVE_FROM_CART
-} from './cartTypes';
+} from './cartActions';
 
 const initialState = {
     cart: []
