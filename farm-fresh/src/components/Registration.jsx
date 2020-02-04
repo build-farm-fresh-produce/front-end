@@ -78,7 +78,7 @@ const Registration = (props) => {
 
     const [farmDetails, updateFarmDetails]= useState({
         farm_name: '',
-        owner_id:  0,
+        owner_id:  '',
         address: '',
         city: '',
         state: '',
@@ -96,21 +96,11 @@ const Registration = (props) => {
         }else if(validation.isFarmer){
             axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
             .then(res => {
-            localStorage.setItem('token', res.data.token);
-            updateFarmDetails({...farmDetails,owner_id: res.data.id})
-            console.log(res.data.token)
+            // localStorage.setItem('token', res.data.token);
+            
             console.log('res.data.id',res.data.id)
+            updateFarmDetails({...farmDetails,owner_id: res.data.id})
             console.log('owner_id',farmDetails.owner_id);
-            
-            console.log(farmDetails)
-            // console.log(res.data.token)
-            
-  
-            console.log(credentials)
-            })
-            .catch(err => {
-                console.log(err);
-            })
 
             axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/farms', newFarms)
             .then(response => {
@@ -119,6 +109,15 @@ const Registration = (props) => {
             .catch(error => {
                 console.log(error)
             })
+            
+            
+    
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+            
 
             setLoading({...loading,isLoading: true})
             setTimeout(()=> {
