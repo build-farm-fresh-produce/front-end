@@ -14,6 +14,7 @@ function Cart({ cart, removeFromCart }) {
                     <p>{item.product_name}</p>
                     <p>{item.description}</p>
                     <p>${item.price}</p>
+                    <p>Quantity: {item.quantity_in_cart}</p>
                     <button onClick={() => removeFromCart(item)}>Remove</button>
                 </div>
             )
