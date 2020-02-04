@@ -1,10 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { removeFromCart } from '../redux/cart/cartActions';
 import Navigation from './Navigation';
 
 function Cart({ cart, removeFromCart }) {
-    // console.log(cart);
     // console.log(cart.cart.length);
     let addedItems = cart.cart.length ? (
         cart.cart.map(item => {
@@ -22,6 +21,7 @@ function Cart({ cart, removeFromCart }) {
     ) : (
         <p>Nothing.</p>
     )
+
     return (
         <div className='cart'>
             <Navigation />

@@ -12,11 +12,6 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
         fetchProducts()
     }, [])
 
-    const handleChange = (e, product) => {
-        e.preventDefault();
-        addToCart(product);
-    }
-
     return productData.loading ? (
         <Load />
     ) : productData.error ? (
@@ -32,7 +27,7 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
                         return (
                             <>
                                 <Product product={product} />
-                                <button onClick={(e) => handleChange(e, product)}>Add To Cart</button>
+                                <button onClick={() => addToCart(product)}>Add To Cart</button>
                             </>
                         )  
                     })
