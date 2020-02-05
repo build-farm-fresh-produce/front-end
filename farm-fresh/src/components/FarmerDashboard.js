@@ -1,10 +1,12 @@
 import React from "react";
 import Faker from "faker";
 import { Link, Route } from "react-router-dom";
+import Navigation from "./Navigation";
 
 export default function Farmer() {
   return (
     <div>
+      <Navigation />
       <h1>Farmer's Dashboard</h1>
       <div className="info">
         <p>Name: {Faker.company.companyName()}</p>

@@ -4,15 +4,12 @@ import * as Yup from "yup";
 import Navigation from "./Navigation";
 
 export default function EditForm() {
-  // Notice that we have to initialize ALL of fields with values. These
-  // could come from props, but since we don't want to prefill this form,
-  // we just use an empty string. If you don't do this, React will yell
-  // at you.
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
-      email: ""
+      email: "",
+      address: ""
     },
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
@@ -45,6 +42,14 @@ export default function EditForm() {
           type="email"
           onChange={formik.handleChange}
           value={formik.values.email}
+        />
+        <label htmlFor="address">Location</label>
+        <input
+          id="address"
+          name="address"
+          type="text"
+          onChange={formik.handleChange}
+          value={formik.values.address}
         />
         <button type="submit">Submit</button>
       </form>

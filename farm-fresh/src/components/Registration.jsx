@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { axiosWithAuth } from '../tools/axiosAuth';
+import React, { useState } from "react";
+import { axiosWithAuth } from "../tools/axiosAuth";
 
-import FarmForm from './FarmForm';
-import styled from 'styled-components';
-import Load from './Loader';
-import '../App.css';
+import FarmerDashboard from "./FarmerDashboard";
 
-
+import FarmForm from "./FarmForm";
+import styled from "styled-components";
+import Load from "./Loader";
+import "../App.css";
 
 const FormWrap = styled.div`
 background-color: rgba(0,0,0,.3);
@@ -54,184 +54,188 @@ button {
         padding: 2%;
     }
 }
-`
+`;
 
-const Registration = (props) => {
+const Registration = props => {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+    is_farmer: "n"
+  });
 
-    const [credentials, setCredentials] = useState({
-        username: '',
-        password: '',
-        is_farmer: 'n',
-        
-    });
+  const [loading, setLoading] = useState({
+    isLoading: false
+  });
 
+  const [validation, setValidation] = useState({
+    usernameVal: false,
+    passwordVal: false,
+    isFarmer: false
+  });
 
-    const [loading, setLoading] = useState({
-        isLoading: false
-    })
+  const [farmDetails, updateFarmDetails] = useState({
+    farm_name: "",
+    owner_id: 0,
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    phone_number: "",
+    email: ""
+  });
+  const [newFarms, addNewFarms] = useState();
 
-    const [validation, setValidation] = useState({
-        usernameVal: false,
-        passwordVal: false,
-        isFarmer: false,
-    })
+  const register = e => {
+    e.preventDefault();
+    if (
+      validation.usernameVal ||
+      validation.passwordVal ||
+      credentials.username === "" ||
+      credentials.password === ""
+    ) {
+      setValidation({ ...validation, usernameVal: true, passwordVal: true });
+    } else if (validation.isFarmer) {
+      axiosWithAuth()
+        .post(
+          "https://farm-fresh-produce-api.herokuapp.com/api/auth/register",
+          credentials
+        )
+        .then(res => {
+          localStorage.setItem("token", res.data.token);
+          updateFarmDetails({ ...farmDetails, owner_id: res.data.id });
+          console.log(res.data.token);
+          console.log("res.data.id", res.data.id);
+          console.log("owner_id", farmDetails.owner_id);
 
-    const [farmDetails, updateFarmDetails]= useState({
-        farm_name: '',
-        owner_id:  0,
-        address: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        phone_number: '',
-        email: '',
-    })
-    const [newFarms, addNewFarms]= useState();
+          console.log(farmDetails);
+          // console.log(res.data.token)
 
-    const register = e => {
-        e.preventDefault();
-        if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
-            setValidation({...validation,usernameVal: true,passwordVal: true})
-            
-        }else if(validation.isFarmer){
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
-            .then(res => {
-            localStorage.setItem('token', res.data.token);
-            updateFarmDetails({...farmDetails,owner_id: res.data.id})
-            console.log(res.data.token)
-            console.log('res.data.id',res.data.id)
-            console.log('owner_id',farmDetails.owner_id);
-            
-            console.log(farmDetails)
-            // console.log(res.data.token)
-            
-  
-            console.log(credentials)
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/farms', newFarms)
-            .then(response => {
-                console.log(response)
-            })
-            .catch(error => {
-                console.log(error)
-            })
-
-            setLoading({...loading,isLoading: true})
-            setTimeout(()=> {
-                setLoading({...loading,isLoading: false})
-            },2000)
-            props.history.push('/login-user');
-
-        }else {
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
-            .then(res => {
-            localStorage.setItem('token', res.data.token);
-            props.history.push('/login-user');
-            
-            
-            console.log(credentials)
-            
-            })
-            setLoading({...loading,isLoading: true})
-            setTimeout(()=> {
-                setLoading({...loading,isLoading: false})
-            },2000)
-        }
-    }
-    const handleChange = e => {
-        setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value
+          console.log(credentials);
         })
-        console.log(credentials)
-        console.log(newFarms)
+        .catch(err => {
+          console.log(err);
+        });
+
+      axiosWithAuth()
+        .post(
+          "https://farm-fresh-produce-api.herokuapp.com/api/farms",
+          newFarms
+        )
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+
+      setLoading({ ...loading, isLoading: true });
+      setTimeout(() => {
+        setLoading({ ...loading, isLoading: false });
+      }, 2000);
+      props.history.push("/login-user");
+    } else {
+      axiosWithAuth()
+        .post(
+          "https://farm-fresh-produce-api.herokuapp.com/api/auth/register",
+          credentials
+        )
+        .then(res => {
+          localStorage.setItem("token", res.data.token);
+          props.history.push("/login-user");
+
+          console.log(credentials);
+        });
+      setLoading({ ...loading, isLoading: true });
+      setTimeout(() => {
+        setLoading({ ...loading, isLoading: false });
+      }, 2000);
     }
+  };
+  const handleChange = e => {
+    setCredentials({
+      ...credentials,
+      [e.target.name]: e.target.value
+    });
+    console.log(credentials);
+    console.log(newFarms);
+  };
 
-    const validateUserName = (e) => {
-
-        if(credentials.username === '') {
-            setValidation({...validation,usernameVal: true})
-        }else {
-            setValidation({...validation,usernameVal: false})
-        }
-        
-        
+  const validateUserName = e => {
+    if (credentials.username === "") {
+      setValidation({ ...validation, usernameVal: true });
+    } else {
+      setValidation({ ...validation, usernameVal: false });
     }
+  };
 
-    const handleCheck = (e) => {
-        setValidation({...validation,isFarmer: !validation.isFarmer})
-        setCredentials({...credentials,is_farmer: 'y'})
-        console.log(credentials)
+  const handleCheck = e => {
+    setValidation({ ...validation, isFarmer: !validation.isFarmer });
+    setCredentials({ ...credentials, is_farmer: "y" });
+    console.log(credentials);
+  };
+
+  const validatePassword = e => {
+    if (credentials.password === "") {
+      setValidation({ ...validation, passwordVal: true });
+    } else {
+      setValidation({ ...validation, passwordVal: false });
     }
+  };
 
-    const validatePassword = (e) => {
+  return (
+    <div className="field">
+      {loading.isLoading ? (
+        <FormWrap>
+          <h4>Logging in...</h4> <Load />{" "}
+        </FormWrap>
+      ) : (
+        <FormWrap>
+          <h4>Register here to get access to farm fresh produce!</h4>
+          <form onSubmit={register}>
+            <input
+              name="username"
+              className="userInput"
+              value={credentials.username}
+              type="text"
+              placeholder="Username"
+              onChange={handleChange}
+              onBlur={validateUserName}
+            />
+            {validation.usernameVal ? <p>You need a username!</p> : ""}
 
-        if(credentials.password === '') {
-            setValidation({...validation,passwordVal: true})
-        }else{
-            setValidation({...validation,passwordVal: false})
-
-        }
-        
-        
-    }
-
-    return (
-        <div className='field'>
-            
-
-            { loading.isLoading ? <FormWrap><h4>Logging in...</h4> <Load /> </FormWrap>   :
-            <FormWrap>
-                <h4>Register here to get access to farm fresh produce!</h4>
-            <form onSubmit={register}>
-                <input 
-                name='username'
-                className='userInput'
-                value={credentials.username}
-                type="text"
-                placeholder='Username'
-                onChange={handleChange}
-                onBlur ={validateUserName}/>
-                {validation.usernameVal ? <p>You need a username!</p> : '' }
-                
-            
-                <input 
-                name='password'
-                value={credentials.password}
-                type="password"
-                placeholder='Password'
-                onChange={handleChange}
-                onBlur ={validatePassword}/>
-                {validation.passwordVal ? <p>You need a password!</p> : '' }
-                <h4>Are you a farmer?</h4>
-                <input 
-                name='isFarmer'
-                value={credentials.isFarmer}
-                type="checkbox"
-                onChange={handleCheck}/>
-                {validation.isFarmer ? <FarmForm 
-                                        newFarms={newFarms}
-                                        addNewFarms={addNewFarms}
-                                        farmDetails={farmDetails}
-                                        updateFarmDetails={updateFarmDetails}/> : '' }
-                <button type='submit'>Register!</button>
-            </form>
-            
-            </FormWrap> }
-
-            
-            
-
-            
-
-            
-            
-        </div>
-    );
-}
+            <input
+              name="password"
+              value={credentials.password}
+              type="password"
+              placeholder="Password"
+              onChange={handleChange}
+              onBlur={validatePassword}
+            />
+            {validation.passwordVal ? <p>You need a password!</p> : ""}
+            <h4>Are you a farmer?</h4>
+            <input
+              name="isFarmer"
+              value={credentials.isFarmer}
+              type="checkbox"
+              onChange={handleCheck}
+            />
+            {validation.isFarmer ? (
+              <FarmForm
+                newFarms={newFarms}
+                addNewFarms={addNewFarms}
+                farmDetails={farmDetails}
+                updateFarmDetails={updateFarmDetails}
+              />
+            ) : (
+              ""
+            )}
+            <button type="submit">Register!</button>
+          </form>
+        </FormWrap>
+      )}
+      <FarmerDashboard farmDetails={farmDetails} />
+    </div>
+  );
+};
 
 export default Registration;
