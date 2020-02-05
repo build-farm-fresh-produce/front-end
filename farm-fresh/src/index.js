@@ -9,15 +9,15 @@ import { createStore,applyMiddleware } from 'redux';
 import { combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import { farmReducer } from '../src/reducers/farmReducer';
-import { cartReducer } from '../src/reducers/cartReducer';
+// import farmReducer from './redux/farms/farmReducer';
+import cartReducer from './redux/cart/cartReducer';
+import productReducer from './redux/products/productReducer';
 
-const allReducers = {
-    farms: farmReducer,
-    shoppingCart: cartReducer
-};
-
-const rootReducer = combineReducers(allReducers);
+const rootReducer = combineReducers({
+    product: productReducer,
+    // farm: farmReducer
+    cart: cartReducer
+});
 
 let store =  createStore(rootReducer, applyMiddleware(thunk));
 

@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
 const Div = styled.div`
 img {
     width: 25%;
@@ -9,15 +8,13 @@ img {
 `
 
 
-const Product = (props) => {
+const Product = props => {
     return (
         <Div>
-            <img src={props.image} alt={props.name}/>
-            <p>{props.name}</p>
-            <p>{props.description}</p>
-        
-            <button>Add To Cart</button>
-            
+            <img src={props.product.image_url} alt={props.product.name}/>
+            <p>{props.product.product_name}</p>
+            <p>{props.product.description}</p>
+            <p>${props.product.price}</p>
         </Div>
     );
 }
