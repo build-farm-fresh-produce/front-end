@@ -1,16 +1,16 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import { fetchProducts } from '../redux/products/productActions';
-import { addToCart } from '../redux/cart/cartActions';
-import Product from './Product';
-import Load from './Loader';
-import Navigation from './Navigation';
-
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { fetchProducts } from "../redux/products/productActions";
+import { addToCart } from "../redux/cart/cartActions";
+import Product from "./Product";
+import Load from "./Loader";
+import Navigation from "./Navigation";
 
 function Products({ productData, fetchProducts, addToCart, cart }) {
-    useEffect(() => {
-        fetchProducts()
-    }, [])
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
 
     return productData.loading ? (
         <Load />
@@ -38,21 +38,19 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
     );
 };
 
+
 const mapStateToProps = state => {
-    return {
-        productData: state.product,
-        cart: state.cart
-    };
+  return {
+    productData: state.product,
+    cart: state.cart
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {
-        fetchProducts: () => dispatch(fetchProducts()),
-        addToCart: product => dispatch(addToCart(product))
-    };
+  return {
+    fetchProducts: () => dispatch(fetchProducts()),
+    addToCart: product => dispatch(addToCart(product))
+  };
 };
 
-export default connect(
-    mapStateToProps,
-    mapDispatchToProps
-)(Products);
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
