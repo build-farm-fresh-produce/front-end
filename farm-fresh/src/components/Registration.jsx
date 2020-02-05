@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
 
-import FarmerDashboard from "./FarmerDashboard";
-
 import FarmForm from "./FarmForm";
 import styled from "styled-components";
 import Load from "./Loader";
@@ -233,7 +231,6 @@ const Registration = props => {
           </form>
         </FormWrap>
       )}
-      <FarmerDashboard farmDetails={farmDetails} />
     </div>
   );
 };
