@@ -72,9 +72,15 @@ const Login = (props) => {
             axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/login', credentials)
             .then(res => {
             localStorage.setItem('token', res.data.token);
+            localStorage.setItem('userId', res.data.userName);
             console.log(res)
             console.log(res.data.token)
-            props.history.push('/products');
+            if(res.data.is_farmer === 'y') {
+                props.history.push('/farmer-dashboard');
+            }else {
+                props.history.push('/products');
+            }
+            
             
             })
             .catch(err => {
