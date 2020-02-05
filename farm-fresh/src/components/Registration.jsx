@@ -14,7 +14,7 @@ color: white;
 text-shadow: 2px 2px 2px #111;
 width: 20em;
 border-radius: 8px;
-
+height: 100%;
 margin: 0 auto;
 padding: 3%;
 display: flex;
@@ -28,7 +28,7 @@ h4 {
     
 }
 form {
-    margin-top: 5em;
+    margin: 5.5em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -78,7 +78,7 @@ const Registration = (props) => {
 
     const [farmDetails, updateFarmDetails]= useState({
         farm_name: '',
-        owner_id:  '',
+        owner_id:  Date.now(),
         address: '',
         city: '',
         state: '',
@@ -99,7 +99,7 @@ const Registration = (props) => {
             // localStorage.setItem('token', res.data.token);
             
             console.log('res.data.id',res.data.id)
-            updateFarmDetails({...farmDetails,owner_id: res.data.id})
+           
             console.log('owner_id',farmDetails.owner_id);
 
             axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/farms', newFarms)
