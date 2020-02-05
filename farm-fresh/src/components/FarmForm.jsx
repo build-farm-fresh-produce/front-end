@@ -5,7 +5,7 @@ const FormWrap = styled.div`
 
 color: white;
 text-shadow: 2px 2px 2px #111;
-width: 20em;
+width: 80%;
 border-radius: 8px;
 
 margin: 0 auto;
@@ -37,15 +37,19 @@ form {
         margin: 1.5em 0;
     }
 }
-button {
-    font-size: 1.3em;
-    padding: 3%;
-    border-radius: 8px;
-    font-family: 'Gelasio', serif;
-    
-    @media(min-width: 800px) {
-        padding: 2%;
-    }
+.setFarmDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: grey;
+  color: black;
+  height: 2em;
+  width: 5em;
+  text-align: center;
+  text-shadow: none;
+  margin-bottom: 2em;
+
 }
 `
 
@@ -135,7 +139,7 @@ const FarmForm = (props) => {
                 placeholder='Email'
                 onChange={handleChange}
               />
-              <div onClick={submitHandler}>Done!</div>
+              <div className='setFarmDetails' onClick={submitHandler}><p>Done!</p></div>
             </FormWrap>
             
         </div>
