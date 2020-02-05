@@ -1,9 +1,13 @@
+
 import React, { useEffect, useState } from "react";
+
 import Faker from "faker";
+import { axiosWithAuth } from '../tools/axiosAuth';
 import { Link, Route } from "react-router-dom";
 import Navigation from "./Navigation";
 import Registration from "./Registration";
 import { axiosWithAuth } from "../tools/axiosAuth";
+
 
 export default function Farmer(props) {
   let id = localStorage.getItem("farmId");
@@ -21,13 +25,17 @@ export default function Farmer(props) {
         console.log(error);
       });
   });
+
   return (
     <div>
       <Navigation />
 
       <h1>Farmer's Dashboard</h1>
       <div className="info">
+
+
         <p>Name: {farmer.userName}</p>
+
         <p>Phone Number: {Faker.phone.phoneNumber()} </p>
         <p>Email: {Faker.internet.email()}</p>
         <p>Street Address: {Faker.address.streetAddress()}</p>

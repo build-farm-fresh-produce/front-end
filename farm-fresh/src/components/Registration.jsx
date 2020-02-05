@@ -12,7 +12,7 @@ color: white;
 text-shadow: 2px 2px 2px #111;
 width: 20em;
 border-radius: 8px;
-
+height: 100%;
 margin: 0 auto;
 padding: 3%;
 display: flex;
@@ -26,7 +26,7 @@ h4 {
     
 }
 form {
-    margin-top: 5em;
+    margin: 5.5em 0;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,63 +52,102 @@ button {
         padding: 2%;
     }
 }
+
+`
+
+const Registration = (props) => {
+
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: '',
+        is_farmer: 'n',
+        
+    });
+
+
+    const [loading, setLoading] = useState({
+        isLoading: false
+    })
+
+    const [validation, setValidation] = useState({
+        usernameVal: false,
+        passwordVal: false,
+        isFarmer: false,
+    })
+
+    const [farmDetails, updateFarmDetails]= useState({
+        farm_name: '',
+        owner_id:  0,
+        address: '',
+        city: '',
+        state: '',
+        zipcode: '',
+        phone_number: '',
+        email: '',
+    })
+    const [newFarms, addNewFarms]= useState();
+
+    const register = e => {
+        e.preventDefault();
+        if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
+            setValidation({...validation,usernameVal: true,passwordVal: true})
+            
+        }else if(validation.isFarmer){
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
+            .then(res => {
+            // localStorage.setItem('token', res.data.token);
+            
+            console.log('res.data.id',res.data.id)
+           updateFarmDetails({farmDetails,owner_id: res.data.id});
+            console.log('owner_id',farmDetails.owner_id);
+
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/farms', newFarms)
+            .then(response => {
+                console.log(response)
+                localStorage.setItem('farmId', response.data);
+            })
+            .catch(error => {
+                console.log(error)
+            })
+            
+            
+    
+            })
+            .catch(err => {
+                console.log(err);
+            })
+
+            
+
+            setLoading({...loading,isLoading: true})
+            setTimeout(()=> {
+                setLoading({...loading,isLoading: false})
+            },2000)
+            // props.history.push('/login-user');
+
+        }else {
+            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
+            .then(res => {
+            localStorage.setItem('token', res.data.token);
+            props.history.push('/login-user');
+            
+            
+            console.log(credentials)
+            
+            })
+            setLoading({...loading,isLoading: true})
+            setTimeout(()=> {
+                setLoading({...loading,isLoading: false})
+            },2000)
+        }
+    }
+    const handleChange = e => {
+        setCredentials({
+            ...credentials,
+            [e.target.name]: e.target.value
+
 `;
 
-const Registration = props => {
-  const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
-    is_farmer: "n"
-  });
-
-  const [loading, setLoading] = useState({
-    isLoading: false
-  });
-
-  const [validation, setValidation] = useState({
-    usernameVal: false,
-    passwordVal: false,
-    isFarmer: false
-  });
-
-  const [farmDetails, updateFarmDetails] = useState({
-    farm_name: "",
-    owner_id: 0,
-    address: "",
-    city: "",
-    state: "",
-    zipcode: "",
-    phone_number: "",
-    email: ""
-  });
-  const [newFarms, addNewFarms] = useState();
-
-  const register = e => {
-    e.preventDefault();
-    if (
-      validation.usernameVal ||
-      validation.passwordVal ||
-      credentials.username === "" ||
-      credentials.password === ""
-    ) {
-      setValidation({ ...validation, usernameVal: true, passwordVal: true });
-    } else if (validation.isFarmer) {
-      axiosWithAuth()
-        .post(
-          "https://farm-fresh-produce-api.herokuapp.com/api/auth/register",
-          credentials
-        )
-        .then(res => {
-          localStorage.setItem("token", res.data.token);
-          updateFarmDetails({ ...farmDetails, owner_id: res.data.id });
-          console.log(res.data.token);
-          console.log("res.data.id", res.data.id);
-          console.log("owner_id", farmDetails.owner_id);
-
-          console.log(farmDetails);
-          // console.log(res.data.token)
-
-          console.log(credentials);
         })
         .catch(err => {
           console.log(err);
