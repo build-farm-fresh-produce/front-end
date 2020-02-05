@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
-
 import FarmForm from "./FarmForm";
 import styled from "styled-components";
 import Load from "./Loader";
 import "../App.css";
-
 const FormWrap = styled.div`
 background-color: rgba(0,0,0,.3);
 color: white;
@@ -23,7 +21,6 @@ h4 {
     font-size: 2.2em;
     text-align: center;
     font-family: 'Gelasio', serif;
-    
 }
 form {
     margin: 5.5em 0;
@@ -32,7 +29,6 @@ form {
     align-items: center;
     justify-content: center;
     input {
-        
         height: 2em;
         font-size: 1.3em;
         border-radius 8px;
@@ -47,129 +43,77 @@ button {
     padding: 3%;
     border-radius: 8px;
     font-family: 'Gelasio', serif;
-    
     @media(min-width: 800px) {
         padding: 2%;
     }
 }
-
-`
-
-const Registration = (props) => {
-
-    const [credentials, setCredentials] = useState({
-        username: '',
-        password: '',
-        is_farmer: 'n',
-        
-    });
-
-
-    const [loading, setLoading] = useState({
-        isLoading: false
-    })
-
-    const [validation, setValidation] = useState({
-        usernameVal: false,
-        passwordVal: false,
-        isFarmer: false,
-    })
-
-    const [farmDetails, updateFarmDetails]= useState({
-        farm_name: '',
-        owner_id:  0,
-        address: '',
-        city: '',
-        state: '',
-        zipcode: '',
-        phone_number: '',
-        email: '',
-    })
-    const [newFarms, addNewFarms]= useState();
-
-    const register = e => {
-        e.preventDefault();
-        if(validation.usernameVal || validation.passwordVal || credentials.username === '' || credentials.password==='') {
-            setValidation({...validation,usernameVal: true,passwordVal: true})
-            
-        }else if(validation.isFarmer){
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
-            .then(res => {
-            // localStorage.setItem('token', res.data.token);
-            
-            console.log('res.data.id',res.data.id)
-           updateFarmDetails({farmDetails,owner_id: res.data.id});
-            console.log('owner_id',farmDetails.owner_id);
-
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/farms', newFarms)
+`;
+const Registration = props => {
+  const [credentials, setCredentials] = useState({
+    username: "",
+    password: "",
+    is_farmer: "n"
+  });
+  const [loading, setLoading] = useState({
+    isLoading: false
+  });
+  const [validation, setValidation] = useState({
+    usernameVal: false,
+    passwordVal: false,
+    isFarmer: false
+  });
+  const [farmDetails, updateFarmDetails] = useState({
+    farm_name: "",
+    owner_id: 0,
+    address: "",
+    city: "",
+    state: "",
+    zipcode: "",
+    phone_number: "",
+    email: ""
+  });
+  const [newFarms, addNewFarms] = useState();
+  const register = e => {
+    e.preventDefault();
+    if (
+      validation.usernameVal ||
+      validation.passwordVal ||
+      credentials.username === "" ||
+      credentials.password === ""
+    ) {
+      setValidation({ ...validation, usernameVal: true, passwordVal: true });
+    } else if (validation.isFarmer) {
+      axiosWithAuth()
+        .post(
+          "https://farm-fresh-produce-api.herokuapp.com/api/auth/register",
+          credentials
+        )
+        .then(res => {
+          // localStorage.setItem('token', res.data.token);
+          console.log("res.data.id", res.data.id);
+          updateFarmDetails({ farmDetails, owner_id: res.data.id });
+          console.log("owner_id", farmDetails.owner_id);
+          axiosWithAuth()
+            .post(
+              "https://farm-fresh-produce-api.herokuapp.com/api/farms",
+              newFarms
+            )
             .then(response => {
-                console.log(response)
-                localStorage.setItem('farmId', response.data);
+              console.log(response);
+              localStorage.setItem("farmId", response.data);
             })
             .catch(error => {
-                console.log(error)
-            })
-            
-            
-    
-            })
-            .catch(err => {
-                console.log(err);
-            })
-
-            
-
-            setLoading({...loading,isLoading: true})
-            setTimeout(()=> {
-                setLoading({...loading,isLoading: false})
-            },2000)
-            // props.history.push('/login-user');
-
-        }else {
-            axiosWithAuth().post('https://farm-fresh-produce-api.herokuapp.com/api/auth/register', credentials)
-            .then(res => {
-            localStorage.setItem('token', res.data.token);
-            props.history.push('/login-user');
-            
-            
-            console.log(credentials)
-            
-            })
-            setLoading({...loading,isLoading: true})
-            setTimeout(()=> {
-                setLoading({...loading,isLoading: false})
-            },2000)
-        }
-    }
-    const handleChange = e => {
-        setCredentials({
-            ...credentials,
-            [e.target.name]: e.target.value
-
-`;
-
+              console.log(error);
+            });
         })
         .catch(err => {
           console.log(err);
         });
-
-      axiosWithAuth()
-        .post(
-          "https://farm-fresh-produce-api.herokuapp.com/api/farms",
-          newFarms
-        )
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-
       setLoading({ ...loading, isLoading: true });
       setTimeout(() => {
         setLoading({ ...loading, isLoading: false });
       }, 2000);
-      props.history.push("/login-user");
+      // props.history.push('/login-user');
     } else {
       axiosWithAuth()
         .post(
@@ -179,7 +123,6 @@ const Registration = (props) => {
         .then(res => {
           localStorage.setItem("token", res.data.token);
           props.history.push("/login-user");
-
           console.log(credentials);
         });
       setLoading({ ...loading, isLoading: true });
@@ -196,7 +139,6 @@ const Registration = (props) => {
     console.log(credentials);
     console.log(newFarms);
   };
-
   const validateUserName = e => {
     if (credentials.username === "") {
       setValidation({ ...validation, usernameVal: true });
@@ -204,13 +146,11 @@ const Registration = (props) => {
       setValidation({ ...validation, usernameVal: false });
     }
   };
-
   const handleCheck = e => {
     setValidation({ ...validation, isFarmer: !validation.isFarmer });
     setCredentials({ ...credentials, is_farmer: "y" });
     console.log(credentials);
   };
-
   const validatePassword = e => {
     if (credentials.password === "") {
       setValidation({ ...validation, passwordVal: true });
@@ -218,7 +158,6 @@ const Registration = (props) => {
       setValidation({ ...validation, passwordVal: false });
     }
   };
-
   return (
     <div className="field">
       {loading.isLoading ? (
@@ -239,7 +178,6 @@ const Registration = (props) => {
               onBlur={validateUserName}
             />
             {validation.usernameVal ? <p>You need a username!</p> : ""}
-
             <input
               name="password"
               value={credentials.password}
@@ -273,5 +211,4 @@ const Registration = (props) => {
     </div>
   );
 };
-
 export default Registration;
