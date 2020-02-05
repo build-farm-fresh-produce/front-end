@@ -1,7 +1,6 @@
 import React from "react";
 import Faker from "faker";
 import { Link, Route } from "react-router-dom";
-// import EditForm from "./EditForm";
 
 export default function Farmer() {
   return (
