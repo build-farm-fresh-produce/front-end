@@ -1,6 +1,8 @@
 import {
     ADD_TO_CART,
-    REMOVE_FROM_CART
+    REMOVE_FROM_CART,
+    INCREASE_QUANTITY_IN_CART,
+    DECREASE_QUANTITY_IN_CART
 } from './cartActions';
 
 const initialState = {
@@ -10,43 +12,56 @@ const initialState = {
 const cartReducer = (state = initialState, action) => {
     switch (action.type) {
         case ADD_TO_CART:
-            let existingItem = state.cart.find(item => item.id === action.payload.id);
-            console.log('existing item', existingItem);
-            console.log('cart is curently', state.cart)
-            if (existingItem) {
-                // return {
-                    existingItem.quantity_in_cart += 1
-                    // state.cart.map(item => {
-                    //     console.log('item', item);
-                    //     console.log('item_id', item.id);
-                    //     console.log('action.payload.id', action.payload.id);
-                    //     console.log(typeof(action.payload.id))
-                    //     console.log(typeof(item.id))
-                    //     return item.id === action.payload.id
-                    //     ? item.quantity_in_cart += 1
-                    //     : item
-                    // }
-                    // )
-                // }
-            } else {
-                return {
-                    ...state,
-                    cart: [...state.cart, {...action.payload, quantity_in_cart: 1}]
-                };
+            if (state.cart.findIndex(item => item.id === action.payload.id) !== -1) {
+                const cart = state.cart.reduce((cartAcc, item) => {
+                    if (item.id === action.payload.id) {
+                        cartAcc.push({ ...item, quantity_in_cart: item.quantity_in_cart + 1 })
+                    } else {
+                        cartAcc.push(item)
+                    }
+                    return cartAcc
+                }, [])
+                return { ...state, cart }
             }
-
-
-
-
-
-
-
+            return {
+                ...state,
+                cart: [...state.cart, { ...action.payload, quantity_in_cart: 1 }]
+            }
 
         case REMOVE_FROM_CART:
             return {
                 ...state,
                 cart: state.cart.filter(item => item.id !== action.payload.id)
             };
+
+        case INCREASE_QUANTITY_IN_CART:
+            if (state.cart.findIndex(item => item.id === action.payload.id) > -1) {
+                const cart = state.cart.reduce((cartAcc, item) => {
+                    if (item.id === action.payload.id) {
+                        cartAcc.push({ ...item, quantity_in_cart: item.quantity_in_cart + 1 })
+                    } else {
+                        cartAcc.push(item)
+                    }
+                    return cartAcc
+                }, [])
+                return { ...state, cart };
+            }
+            break
+        
+        case DECREASE_QUANTITY_IN_CART:
+            if (state.cart.findIndex(item => item.id === action.payload.id) > -1) {
+                const cart = state.cart.reduce((cartAcc, item) => {
+                    if (item.id === action.payload.id) {
+                        cartAcc.push({ ...item, quantity_in_cart: item.quantity_in_cart - 1 })
+                    } else {
+                        cartAcc.push(item)
+                    }
+                    return cartAcc.filter(item => item.quantity_in_cart > 0)
+                }, [])
+                return { ...state, cart }
+            }
+            break
+
         default:
             return state;
     }

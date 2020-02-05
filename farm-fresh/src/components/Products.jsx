@@ -11,37 +11,33 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
     fetchProducts();
   }, []);
 
-  const handleChange = (e, product) => {
-    e.preventDefault();
-    addToCart(product);
-  };
 
-  return productData.loading ? (
-    <Load />
-  ) : productData.error ? (
-    <h2>{productData.error}</h2>
-  ) : (
-    <div>
-      <Navigation />
-      <h2>Available Products</h2>
-      <div>
-        {productData &&
-          productData.products &&
-          productData.products.map(product => {
-            return (
-              <>
-                <Product product={product} />
-                <button onClick={e => handleChange(e, product)}>
-                  Add To Cart
-                </button>
-              </>
-            );
-          })}
-        {console.log(cart)}
-      </div>
-    </div>
-  );
-}
+    return productData.loading ? (
+        <Load />
+    ) : productData.error ? (
+        <h2>{productData.error}</h2>
+    ) : (
+        <div>
+            <Navigation />
+            <h2>Available Products</h2>
+            <div>
+                {productData &&
+                    productData.products &&
+                    productData.products.map(product => {
+                        return (
+                            <>
+                                <Product product={product} />
+                                <button onClick={() => addToCart(product)}>Add To Cart</button>
+                            </>
+                        )  
+                    })
+                }
+                {console.log(cart)}
+            </div>
+        </div>
+    );
+};
+
 
 const mapStateToProps = state => {
   return {
