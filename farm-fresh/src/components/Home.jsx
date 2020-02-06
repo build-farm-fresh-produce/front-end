@@ -9,55 +9,68 @@ display: flex;
 flex-direction: column;
 justify-content: center;
 align-items: center;
-height: 98vh;
+height: 100vh;
 
-h4 {
+.banner {
     margin-top: 10%;
     background-color: rgba(0,0,0,.7);
     padding: 3%;
     color: white;
 }
-button {
-    width: 8em;
-    margin: 2em;
-}
+
 
 .buttons {
     display: flex;
     justify-content: space-evenly;
+    background-color: rgba(0,0,0,.7);
     border: 1px solid;
     margin: 4em 0em;
-    background-color: white;
+    
 
-    .logins {
+    .login {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
         border-right: 1px solid black;
     }
-    .registers {
+    .register {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
     }
 
+    button {
+        background-color: rgb(17, 56, 121);
+        border-color: rgb(17, 56, 121);
+        color: white;
+        width: 8em;
+        margin: 2em;
+        padding: 3%;
+    
+    }
+
 }
+
 `
 
 const Home = () => {
     return (
         <Splash className='splash'>
-            <h4>You've come to the best place for stuff like Veggies!</h4>
+            <div className="banner">
+            <h2>Welcome to Freshist!</h2>
+            <h5>Your best choice for farm-fresh produce.</h5>
+            </div>
+            
             <div className="buttons">
-                <div className="logins">
+                <div className="login">
                     
                     <Link to='/login-user'><button>Log In</button></Link>
                     
                     
                 </div>
-                <div className="registers">
+                <div className="register">
                     
                     <Link to='/register-user'><button>Register</button></Link>
                     

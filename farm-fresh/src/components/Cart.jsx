@@ -2,7 +2,6 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { removeFromCart, increaseQuantity, decreaseQuantity } from '../redux/cart/cartActions';
 import getTotalCost from '../redux/cart/cartSelectors';
-import Navigation from './Navigation';
 import styled from 'styled-components';
 
 const Div = styled.div`
@@ -50,7 +49,6 @@ function Cart({ cart, totalCost, removeFromCart, increaseQuantity, decreaseQuant
 
     return (
         <div className='cart'>
-            <Navigation />
             <h2>You have added:</h2>
             <ul>
                 {addedItems}

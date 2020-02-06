@@ -1,17 +1,38 @@
-import React from "react";
-import Faker from "faker";
+import React, { useState, useEffect } from "react";
+import { axiosWithAuth } from "../tools/axiosAuth";
 import { Link, Route } from "react-router-dom";
+import FarmerInventory from './farmer/FarmerInventory';
+// import NavigationFarmer from "./NavigationFarmer";
 
 export default function Farmer() {
+  let id = localStorage.getItem("farmId");
+  const [farmer, setFarmer] = useState({});
+  useEffect(() => {
+    axiosWithAuth()
+      .get(`https://farm-fresh-produce-api.herokuapp.com/api/farms/${id}`)
+      .then(response => {
+        console.log(response);
+        setFarmer(response.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+    console.log(id);
+  }, []);
   return (
     <div>
+      {/* <NavigationFarmer /> */}
       <h1>Farmer's Dashboard</h1>
       <div className="info">
-        <p>Name: {Faker.company.companyName()}</p>
-        <p>Phone Number: {Faker.phone.phoneNumber()} </p>
-        <p>Email: {Faker.internet.email()}</p>
-        <p>Address: {Faker.address.streetAddress()}</p>
+        <p>Farm Name: {farmer.farm_name}</p>
+        <p>Phone Number: {farmer.phone_number} </p>
+        <p>Email: {farmer.email}</p>
+        <p>Address: {farmer.address}</p>
+        <p>City: {farmer.city}</p>
+        <p>State: {farmer.state}</p>
+        <p>Zip Code: {farmer.zipcode}</p>
         <Link to="/edit-info">Edit Info</Link>
+        <FarmerInventory />
       </div>
     </div>
   );
