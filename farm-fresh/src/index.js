@@ -12,11 +12,13 @@ import thunk from 'redux-thunk';
 // import farmReducer from './redux/farms/farmReducer';
 import cartReducer from './redux/cart/cartReducer';
 import productReducer from './redux/products/productReducer';
+import inventoryReducer from './redux/inventory/inventoryReducer';
 
 const rootReducer = combineReducers({
     product: productReducer,
     // farm: farmReducer
-    cart: cartReducer
+    cart: cartReducer,
+    inventory: inventoryReducer
 });
 
 let store =  createStore(rootReducer, applyMiddleware(thunk));
