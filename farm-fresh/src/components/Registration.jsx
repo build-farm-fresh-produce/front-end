@@ -3,7 +3,10 @@ import { axiosWithAuth } from "../tools/axiosAuth";
 import FarmForm from "./FarmForm";
 import styled from "styled-components";
 import Load from "./Loader";
+import { Link } from 'react-router-dom';
 import "../App.css";
+
+
 const FormWrap = styled.div`
 background-color: rgba(0,0,0,.3);
 color: white;
@@ -206,6 +209,7 @@ const Registration = props => {
             )}
             <button type="submit">Register!</button>
           </form>
+          <Link className='to-login' to='/login-user'><button>Log in</button></Link>
         </FormWrap>
       )}
     </div>
