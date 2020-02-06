@@ -3,6 +3,7 @@ import { axiosWithAuth } from "../tools/axiosAuth";
 import { Link, Route } from "react-router-dom";
 import NavigationFarmer from "./NavigationFarmer";
 import Inventory from "./Inventory";
+
 export default function Farmer() {
   let id = localStorage.getItem("farmId");
   const [farmer, setFarmer] = useState({});
@@ -21,6 +22,7 @@ export default function Farmer() {
   return (
     <div>
       <NavigationFarmer />
+
       <h1>Farmer's Dashboard</h1>
       <div className="info">
         <p>Farm Name: {farmer.farm_name}</p>
@@ -30,8 +32,11 @@ export default function Farmer() {
         <p>City: {farmer.city}</p>
         <p>State: {farmer.state}</p>
         <p>Zip Code: {farmer.zipcode}</p>
-        <Link to="/edit-info">Edit Info</Link>
-        <Route to="/inventory" component={Inventory} />
+        <Link to={{ pathname: "/edit-info", state: { farmer } }}>
+          Edit Info
+        </Link>
+
+        <Route path="/farmer-dashboard/inventory" component={Inventory} />
       </div>
     </div>
   );
