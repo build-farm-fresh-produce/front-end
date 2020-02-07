@@ -1,16 +1,30 @@
 import React, {useState, useEffect} from 'react';
 import { axiosWithAuth } from '../../tools/axiosAuth';
 import styled from 'styled-components';
+import InventoryItem from './InventoryItem';
 
 const Div = styled.div`
 border: 1px solid black;
+display: flex;
+flex-direction: column;
+justify-content: space-evenly;
+align-items: center;
+
+.inventory-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  align-items: center;
+  
+}
 
 `
 
 const FarmerInventory = () => {
     let id = localStorage.getItem("farmId");
 
-    const [currentInventory, setCurrentInventory] = useState([{}]);
+    const [currentProducts, setCurrentProducts] = useState([{}]);
+    const [currentQuantity, setCurrentQuantity] = useState();
 
     const [newItem, setNewItem] = useState({
         farm_id: id,
@@ -32,23 +46,28 @@ const FarmerInventory = () => {
     // POST request: https://farm-fresh-produce-api.herokuapp.com/api/products - Add a product - expects JSON Body {"farm_id", "product_name", "description", "image_url", "price", "unit"} (edited) 
 
     useEffect(() => {
+      //axios call to get products 
         axiosWithAuth()
         .get(`https://farm-fresh-produce-api.herokuapp.com/api/products`)
         .then(response => {
           console.log(response.data);
           console.log(id);
           
-        setCurrentInventory(response.data)
-          console.log(currentInventory)
+        setCurrentProducts(response.data)
+          console.log(currentProducts)
         })
         .catch(error => {
           console.log(error);
         });
 
         axiosWithAuth()
+        // axios call to get item quantities
         .get(`https://farm-fresh-produce-api.herokuapp.com/api/inventory`)
         .then(response => {
           console.log(response.data);
+
+          setCurrentQuantity(response.data)
+          console.log(currentQuantity);
  
         })
         .catch(error => {
@@ -76,8 +95,9 @@ const FarmerInventory = () => {
 
 
       const addNewItem = (e) => {
-          e.preventDefault();
+          
         axiosWithAuth()
+        //Posts to new item to prooducts endpoint
         .post(`https://farm-fresh-produce-api.herokuapp.com/api/products`, newItem)
         .then(response => {
           console.log(response.data);
@@ -89,6 +109,7 @@ const FarmerInventory = () => {
         });
 
         axiosWithAuth()
+        //posts how many of the new item there are. 
         .post(`https://farm-fresh-produce-api.herokuapp.com/api/inventory`, newItemQuantity)
         .then(response => {
           console.log(response.data);
@@ -103,17 +124,20 @@ const FarmerInventory = () => {
 
     return (
         <Div>
-            {currentInventory ? currentInventory.map(item => {
+          <div className="inventory-items">
+          {currentProducts ? currentProducts.map(item => {
                 if(item.farm_id == id) {
                     return(
-                        <p>{item.product_name}</p>
+                        <InventoryItem
+                        image={item.image_url}
+                        name={item.product_name} />
                     )
               }
                 
             }) : <p>You have no inventory! Add an item!</p> }
-            {console.log(currentInventory)}
+          </div>
             <form onSubmit={addNewItem}>
-            {/* // POST request: https://farm-fresh-produce-api.herokuapp.com/api/products - Add a product - expects JSON Body {"farm_id", "product_name", "description", "image_url", "price", "unit"} (edited)  */}
+       
 
                 <input 
                 type="text"
