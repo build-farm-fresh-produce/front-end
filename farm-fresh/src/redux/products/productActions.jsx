@@ -32,6 +32,7 @@ export const fetchProducts = () => {
             .get('https://farm-fresh-produce-api.herokuapp.com/api/products/')
             .then(res => {
                 const products = res.data
+                console.log(res)
                 dispatch(fetchProductsSuccess(products))
             })
             .catch(err => {
