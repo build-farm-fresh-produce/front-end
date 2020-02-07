@@ -1,5 +1,7 @@
+
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
+
 import { Link, Route } from "react-router-dom";
 import FarmerInventory from './farmer/FarmerInventory';
 // import NavigationFarmer from "./NavigationFarmer";
@@ -24,6 +26,7 @@ export default function Farmer() {
       {/* <NavigationFarmer /> */}
       <h1>Farmer's Dashboard</h1>
       <div className="info">
+
         <p>Farm Name: {farmer.farm_name}</p>
         <p>Phone Number: {farmer.phone_number} </p>
         <p>Email: {farmer.email}</p>
@@ -31,6 +34,7 @@ export default function Farmer() {
         <p>City: {farmer.city}</p>
         <p>State: {farmer.state}</p>
         <p>Zip Code: {farmer.zipcode}</p>
+
         <Link to="/edit-info">Edit Info</Link>
         <FarmerInventory />
       </div>

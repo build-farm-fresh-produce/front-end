@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeFromCart, increaseQuantity, decreaseQuantity } from '../redux/cart/cartActions';
+import { removeFromCart, increaseQuantity, decreaseQuantity, clearCart } from '../redux/cart/cartActions';
+import { completeOrder } from '../redux/orders/orderActions';
 import getTotalCost from '../redux/cart/cartSelectors';
 import styled from 'styled-components';
 
@@ -20,13 +21,13 @@ button {
 }
 `
 
-function Cart({ cart, totalCost, removeFromCart, increaseQuantity, decreaseQuantity }) {
+function Cart({ cart, totalCost, removeFromCart, increaseQuantity, decreaseQuantity, completeOrder, orders, clearCart }) {
 
     let addedItems = cart.cart.length ? (
         <div>
             {cart.cart.map(item => {
                 return (
-                    <Div>
+                    <Div key={item.id}>
                         <button onClick={() => removeFromCart(item)}>Remove</button>
                         <img src={item.image_url} alt={item.name}/>
                         <button onClick={() => decreaseQuantity(item)}>-</button>
@@ -40,7 +41,16 @@ function Cart({ cart, totalCost, removeFromCart, increaseQuantity, decreaseQuant
                     </Div>
                 )
             })}
-            <p>Total: ${totalCost.toFixed(2)}</p>
+            {console.log(cart)}
+            <p>Total: ${totalCost.toFixed(2)}</p>           
+            <div>
+                <button onClick={() => clearCart(cart)}>Clear Cart</button>
+                <button onClick={() => {
+                completeOrder(cart);
+                clearCart(cart);
+                }}>Complete Order</button>
+            </div>
+            {console.log(orders)}
         </div>
 
     ) : (
@@ -60,7 +70,8 @@ function Cart({ cart, totalCost, removeFromCart, increaseQuantity, decreaseQuant
 const mapStateToProps = state => {
     return {
         cart: state.cart,
-        totalCost: getTotalCost(state.cart)
+        totalCost: getTotalCost(state.cart),
+        orders: state.orders
     };
 };
 
@@ -68,7 +79,9 @@ const mapDispatchToProps = dispatch => {
     return {
         removeFromCart: product => dispatch(removeFromCart(product)),
         increaseQuantity: product => dispatch(increaseQuantity(product)),
-        decreaseQuantity: product => dispatch(decreaseQuantity(product))
+        decreaseQuantity: product => dispatch(decreaseQuantity(product)),
+        completeOrder: cart => dispatch(completeOrder(cart)),
+        clearCart: cart => dispatch(clearCart(cart))
     };
 };
 
