@@ -22,9 +22,10 @@ align-items: center;
 
 const FarmerInventory = () => {
     let id = localStorage.getItem("farmId");
+    let inventoryTarget ={};
 
     const [currentProducts, setCurrentProducts] = useState([{}]);
-    const [currentQuantity, setCurrentQuantity] = useState();
+    const [currentQuantity, setCurrentQuantity] = useState([]);
 
     const [newItem, setNewItem] = useState({
         farm_id: id,
@@ -50,8 +51,8 @@ const FarmerInventory = () => {
         axiosWithAuth()
         .get(`https://farm-fresh-produce-api.herokuapp.com/api/products`)
         .then(response => {
-          console.log(response.data);
-          console.log(id);
+          // console.log(response.data);
+          // console.log(id);
           
         setCurrentProducts(response.data)
           console.log(currentProducts)
@@ -66,7 +67,7 @@ const FarmerInventory = () => {
         .then(response => {
           console.log(response.data);
 
-          setCurrentQuantity(response.data)
+          setCurrentQuantity([response.data])
           console.log(currentQuantity);
  
         })
@@ -121,16 +122,64 @@ const FarmerInventory = () => {
         });
       }
 
+      const deleteItem = (id) => {
+        axiosWithAuth()
+        //posts how many of the new item there are. 
+        .delete(`https://farm-fresh-produce-api.herokuapp.com/api/products/${id}`, newItemQuantity)
+        .then(response => {
+          console.log(response.data);
+          let result = currentProducts.filter(item => {
+            return item.id !== response.data
+          })
+
+          setCurrentProducts(result)
+          
+        })
+        .catch(error => {
+          console.log(error);
+        });
+        
+      }
+
+      const updateItem =(id, item) => {
+        axiosWithAuth()
+        //posts how many of the new item there are. 
+        .put(`https://farm-fresh-produce-api.herokuapp.com/api/products/${id}`, item)
+        .then(response => {
+          console.log(response.data);
+          let result = currentProducts.map(item => {
+            if(item.id === response.data.id) {
+              item =  response.data
+            }
+          })
+
+          setCurrentProducts(result)
+          
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      }
+
 
     return (
         <Div>
           <div className="inventory-items">
           {currentProducts ? currentProducts.map(item => {
                 if(item.farm_id == id) {
+                  
+                  
+
                     return(
                         <InventoryItem
+                        item={item}
                         image={item.image_url}
-                        name={item.product_name} />
+                        name={item.product_name}
+                        quantity={inventoryTarget}
+                        deleteItem={deleteItem}
+                        updateItem={updateItem}
+                        
+                      />
                     )
               }
                 

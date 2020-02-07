@@ -116,7 +116,7 @@ const Registration = props => {
       setTimeout(() => {
         setLoading({ ...loading, isLoading: false });
       }, 2000);
-      // props.history.push('/login-user');
+      props.history.push('/login-user');
     } else {
       axiosWithAuth()
         .post(
@@ -142,6 +142,7 @@ const Registration = props => {
     console.log(credentials);
     console.log(newFarms);
   };
+
   const validateUserName = e => {
     if (credentials.username === "") {
       setValidation({ ...validation, usernameVal: true });
