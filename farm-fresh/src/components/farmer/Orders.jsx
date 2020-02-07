@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 const Orders = (props) => {
     let id = localStorage.getItem("farmId");
- 
+    const [farmerOrders, setFarmerOrders] = useState([]);
     useEffect(() => {
         
 
@@ -15,12 +15,12 @@ const Orders = (props) => {
         {props.orders.orders.map((item,i) => {
             return item.map(obj => {
                console.log(obj.farm_id)
-               return( 
-                <div>
-                    <p>{obj.product_name}</p>
-                    <p>{obj.quantity_in_cart}</p>
-                </div>
-               )
+               console.log(id)
+               if(obj.farm_id === id) {
+                //    setFarmerOrders([...farmerOrders, obj]);
+                //    console.log(farmerOrders)
+                alert(obj)
+               }
             })
            
         })}
