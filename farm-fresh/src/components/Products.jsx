@@ -25,10 +25,10 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
                     productData.products &&
                     productData.products.map(product => {
                         return (
-                            <>
-                                <Product product={product} />
-                                <button onClick={() => addToCart(product)}>Add To Cart</button>
-                            </>
+                            <div key={product.id}>
+                              <Product product={product} />
+                              <button onClick={() => addToCart(product)}>Add To Cart</button>
+                            </div>
                         )  
                     })
                 }

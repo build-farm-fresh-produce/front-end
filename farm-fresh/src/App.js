@@ -5,6 +5,7 @@ import Registration from "./components/Registration";
 import Home from "./components/Home";
 import Products from "./components/Products";
 import Cart from "./components/Cart";
+import InventoryList from "./components/InventoryList";
 import FarmerDasboard from "./components/FarmerDashboard";
 import EditForm from "./components/EditForm";
 import { Route, Link, Redirect } from "react-router-dom";
@@ -34,6 +35,7 @@ function App() {
         <PrivateRoute path="/edit-info" component={EditForm} />
         <PrivateRoute path="/products" component={Products} />
         <PrivateRoute path="/cart" component={Cart} />
+        <PrivateRoute path="/inventory" component={InventoryList} />
       </div>
     </Router>
   );

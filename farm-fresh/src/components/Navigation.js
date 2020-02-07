@@ -7,6 +7,7 @@ function Navigation() {
       <NavLink to="/farmer-dashboard">Dashboard</NavLink>
       <NavLink to="/products">Products</NavLink>
       <NavLink to="/cart">Cart</NavLink>
+      <NavLink to="/inventory">Inventory</NavLink>
     </div>
   );
 }
