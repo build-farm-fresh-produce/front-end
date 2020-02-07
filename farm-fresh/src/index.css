@@ -11,3 +11,32 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+/* Nav */
+
+.navigation{
+  background:#1f7a1f ;
+  ;
+  height: 70px;
+  font-size: 2.3rem;
+  padding-top: 10px;
+  
+
+}
+
+.nav-link{
+  text-decoration: none ;
+  margin: 20px ;
+  padding-top: 10px;
+  color: #f2f2f2;
+  
+  
+
+}
+
+a:hover{
+    color: #a6a6a6;
+
+  }
+
+  
