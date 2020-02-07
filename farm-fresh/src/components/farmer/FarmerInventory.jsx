@@ -8,13 +8,15 @@ import { connect } from 'react-redux';
 const Div = styled.div`
 border: 1px solid black;
 display: flex;
+width:80%;
+margin: 1em auto;
 flex-direction: column;
 justify-content: space-evenly;
 align-items: center;
-
+padding: 4%;
 .inventory-items {
   display: flex;
-  flex-wrap: wrap;
+  width: 100%:
   justify-content: space-evenly;
   align-items: center;
   
@@ -192,7 +194,8 @@ const FarmerInventory = ({orders}) => {
             }) : <p>You have no inventory! Add an item!</p> }
           </div>
             <form onSubmit={e =>addNewItem()}>
-       
+
+              <h1>Use this form to add a new Item!</h1>
 
                 <input 
                 type="text"
