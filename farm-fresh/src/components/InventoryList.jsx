@@ -25,7 +25,7 @@ function InventoryList({ productData, inventoryData, fetchInventory }) {
         <h2>{inventoryData.error}</h2>
     ) : (
         <div>
-            <Navigation />
+           
             <h2>Inventory Status</h2>
             <Div>
                 {inventoryData &&
