@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import { axiosWithAuth } from '../../tools/axiosAuth';
 import styled from 'styled-components';
 import InventoryItem from './InventoryItem';
+import Orders from './Orders';
+import { connect } from 'react-redux';
 
 const Div = styled.div`
 border: 1px solid black;
@@ -20,7 +22,7 @@ align-items: center;
 
 `
 
-const FarmerInventory = () => {
+const FarmerInventory = ({orders}) => {
     let id = localStorage.getItem("farmId");
     let inventoryTarget ={};
 
@@ -74,9 +76,10 @@ const FarmerInventory = () => {
         .catch(error => {
           console.log(error);
         });
-      
 
-    },[])
+        
+
+    },[orders])
 
 
     const handleChange = e => {
@@ -96,7 +99,7 @@ const FarmerInventory = () => {
 
 
       const addNewItem = (e) => {
-          
+         
         axiosWithAuth()
         //Posts to new item to prooducts endpoint
         .post(`https://farm-fresh-produce-api.herokuapp.com/api/products`, newItem)
@@ -164,7 +167,10 @@ const FarmerInventory = () => {
 
     return (
         <Div>
+          <Orders />
           <div className="inventory-items">
+            
+  
           {currentProducts ? currentProducts.map(item => {
                 if(item.farm_id == id) {
                   
@@ -185,7 +191,7 @@ const FarmerInventory = () => {
                 
             }) : <p>You have no inventory! Add an item!</p> }
           </div>
-            <form onSubmit={addNewItem}>
+            <form onSubmit={e =>addNewItem()}>
        
 
                 <input 
@@ -242,4 +248,10 @@ const FarmerInventory = () => {
     );
 }
 
-export default FarmerInventory;
+const mapStateToProps = state => {
+  return {
+    orders: state.orders
+  }
+}
+
+export default connect(mapStateToProps)(FarmerInventory);
