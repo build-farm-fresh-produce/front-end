@@ -5,12 +5,13 @@ import styled from 'styled-components'
 
 function Navigation() {
   return (
-    <div className="navigation">
+    <div id="TopNav" className="navigation">
       <NavLink className="nav-link" to="/farmer-dashboard">Dashboard</NavLink>
       <NavLink className="nav-link" to="/products">Products</NavLink>
       <NavLink className="nav-link" to="/farms">Farms</NavLink>
       <NavLink className="nav-link" to="/inventory">Inventory</NavLink>
       <NavLink className="nav-link" to="/cart">Cart</NavLink>
+     
     </div>
   );
 }

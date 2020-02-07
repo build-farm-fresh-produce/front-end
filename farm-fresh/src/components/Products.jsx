@@ -17,18 +17,20 @@ function Products({ productData, fetchProducts, addToCart, cart }) {
     ) : productData.error ? (
         <h2>{productData.error}</h2>
     ) : (
-        <div>
+        <div className="container-products">
             
-            <h2>Available Products</h2>
-            <div>
+            <h2 className= "header">Available <span>Products</span></h2>
+            <div >
                 {productData &&
                     productData.products &&
                     productData.products.map(product => {
                         return (
                             <div key={product.id}>
                               <Product product={product} />
-                              <button onClick={() => addToCart(product)}>Add To Cart</button>
-                            </div>
+                              <button  className="addCart" onClick={() => addToCart(product)}>Add To Cart</button>
+                              </div>
+                          
+                          
                         )  
                     })
                 }
