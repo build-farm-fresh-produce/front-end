@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
-
+import styled from 'styled-components';
 import { Link, Route } from "react-router-dom";
 import FarmerInventory from './farmer/FarmerInventory';
 // import NavigationFarmer from "./NavigationFarmer";
@@ -22,7 +22,7 @@ export default function Farmer() {
     
   }, []);
   return (
-    <div>
+  <Container className="dashboard">
       {/* <NavigationFarmer /> */}
       <h1>Farmer's Dashboard</h1>
       <div className="info">
@@ -35,9 +35,30 @@ export default function Farmer() {
         <p>State: {farmer.state}</p>
         <p>Zip Code: {farmer.zipcode}</p>
 
-        <Link to="/edit-info">Edit Info</Link>
+        <button className = "edit"><Link to="/edit-info">Edit Info</Link></button>
         <FarmerInventory />
       </div>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+
+  width: 60%;
+  margin-top: auto;
+  margin:auto;
+  padding: 10px;
+  box-shadow: 5px 5px 10px #888888;
+
+  .edit{
+  height: 50px;
+  background-color:  #1f7a1f;
+  width: 30%;
+  }
+
+  .edit a {
+    text-decoration:none;
+    color: #f2f2f2;
+  }
+
+`
