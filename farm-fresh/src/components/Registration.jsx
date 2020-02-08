@@ -50,6 +50,8 @@ button {
         padding: 2%;
     }
 }
+
+
 `;
 const Registration = props => {
   const [credentials, setCredentials] = useState({

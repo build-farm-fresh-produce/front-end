@@ -79,7 +79,7 @@ const FarmerInventory = ({orders}) => {
           console.log(error);
         });
 
-        
+        id = localStorage.getItem("farmId");
 
     },[orders])
 

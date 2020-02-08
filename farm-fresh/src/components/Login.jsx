@@ -45,6 +45,9 @@ button {
         padding: 2%;
     }
 }
+.to-register {
+  margin-top: 1em;
+}
 `;
 const Login = props => {
   const [credentials, setCredentials] = useState({
