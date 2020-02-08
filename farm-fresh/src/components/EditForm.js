@@ -20,7 +20,6 @@ export default function EditForm(props) {
 
   return (
     <div className="edit-form">
-      <NavigationFarmer />
       <h1>Farmer's Dashboard</h1>
       <div className="info-edit">
         <p>Farm Name: {updateInfo.farm_name}</p>
