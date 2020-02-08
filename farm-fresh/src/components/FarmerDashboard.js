@@ -51,3 +51,22 @@ export default function Farmer() {
     </div>
   );
 }
+
+const Container = styled.div`
+  width: 60%;
+  margin-top: auto;
+  margin: auto;
+  padding: 10px;
+  box-shadow: 5px 5px 10px #888888;
+
+  .edit {
+    height: 50px;
+    background-color: #1f7a1f;
+    width: 30%;
+  }
+
+  .edit a {
+    text-decoration: none;
+    color: #f2f2f2;
+  }
+`;

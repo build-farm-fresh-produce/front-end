@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
 import styled from "styled-components";
 import Load from "./Loader";
+import { Link } from "react-router-dom";
 import "../App.css";
-
 const FormWrap = styled.div`
 background-color: rgba(0,0,0,.3);
 color: white;
@@ -45,23 +45,22 @@ button {
         padding: 2%;
     }
 }
+.to-register {
+  margin-top: 1em;
+}
 `;
-
 const Login = props => {
   const [credentials, setCredentials] = useState({
     username: "",
     password: ""
   });
-
   const [loading, setLoading] = useState({
     isLoading: false
   });
-
   const [validation, setValidation] = useState({
     usernameVal: false,
     passwordVal: false
   });
-
   const login = e => {
     e.preventDefault();
     if (
@@ -98,7 +97,6 @@ const Login = props => {
       console.log(credentials);
     }
   };
-
   const handleChange = e => {
     setCredentials({
       ...credentials,
@@ -106,7 +104,6 @@ const Login = props => {
     });
     console.log(credentials);
   };
-
   const validateUserName = e => {
     if (credentials.username === "") {
       setValidation({ ...validation, usernameVal: true });
@@ -114,7 +111,6 @@ const Login = props => {
       setValidation({ ...validation, usernameVal: false });
     }
   };
-
   const validatePassword = e => {
     if (credentials.password === "") {
       setValidation({ ...validation, passwordVal: true });
@@ -122,7 +118,6 @@ const Login = props => {
       setValidation({ ...validation, passwordVal: false });
     }
   };
-
   return (
     <div className="pasture">
       {loading.isLoading ? (
@@ -142,7 +137,6 @@ const Login = props => {
               onBlur={validateUserName}
             />
             {validation.usernameVal ? <p>You need a username!</p> : ""}
-
             <input
               name="password"
               value={credentials.password}
@@ -152,13 +146,14 @@ const Login = props => {
               onBlur={validatePassword}
             />
             {validation.passwordVal ? <p>You need a password!</p> : ""}
-
             <button type="submit">Log In!</button>
           </form>
+          <Link className="to-register" to="/register-user">
+            <button>Register</button>
+          </Link>
         </FormWrap>
       )}
     </div>
   );
 };
-
 export default Login;

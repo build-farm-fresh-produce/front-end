@@ -1,14 +1,21 @@
 import React from "react";
-import { NavLink, Link } from "react-router-dom";
-import Logout from "./Logout";
+import { NavLink } from "react-router-dom";
+import styled from "styled-components";
 
 function Navigation() {
   return (
-    <div className="navigation">
-      <NavLink to="/farmer-dashboard">Dashboard</NavLink>
-      <NavLink to="/products">Products</NavLink>
-      <NavLink to="/cart">Cart</NavLink>
-      <Link onClick={Logout}>Logout</Link>
+    <div id="TopNav" className="navigation">
+      <NavLink className="nav-link" to="/farmer-dashboard">
+        Dashboard
+      </NavLink>
+      <NavLink className="nav-link" to="/products">
+        Products
+      </NavLink>
+      {/* <NavLink className="nav-link" to="/farms">Farms</NavLink>  */}
+      {/* <NavLink className="nav-link" to="/inventory">Inventory</NavLink>  */}
+      <NavLink className="nav-link" to="/cart">
+        Cart
+      </NavLink>
     </div>
   );
 }

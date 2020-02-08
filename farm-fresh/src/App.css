@@ -1,6 +1,7 @@
 .splash{
   background: url('./img/gwapes.jpg')no-repeat center;
   background-size: cover;
+  height: 95vh;
 }
 
 .pasture {
@@ -13,3 +14,4 @@
   background-size: cover;
   height: 100%;
 }
+
