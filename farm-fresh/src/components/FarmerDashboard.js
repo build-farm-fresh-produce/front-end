@@ -29,7 +29,6 @@ export default function Farmer() {
   }, []);
   return (
     <div>
-      <NavigationFarmer />
       <Page>
         <h1>Farmer's Dashboard</h1>
         <div className="info">

@@ -5,47 +5,43 @@ import { fetchInventory } from "../redux/inventory/inventoryActions";
 import Inventory from "./InventoryItem";
 import Load from "./Loader";
 import Navigation from "./Navigation";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const Div = styled.div`
-display: flex;
-flex-direction: row;
-align-items: center;
-`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+`;
 
 function InventoryList({ productData, inventoryData, fetchInventory }) {
   useEffect(() => {
     fetchInventory();
   }, []);
 
-
-    return inventoryData.loading ? (
-        <Load />
-    ) : inventoryData.error ? (
-        <h2>{inventoryData.error}</h2>
-    ) : (
-        <div>
-
-            <h2>Inventory Status</h2>
-            <Div>
-                {inventoryData &&
-                    inventoryData.inventory &&
-                    inventoryData.inventory.map(inventory => {
-                        return (
-                            <>
-                                <Inventory inventory={inventory} />
-                                {/* <button onClick={() => addToCart(product)}>Add To Cart</button> */}
-                            </>
-                        )  
-                    })
-                }
-                {console.log('is inventorydata empty? ', inventoryData)}
-                {console.log('is productdata empty? ', productData)}
-            </Div>
-        </div>
-    );
-};
-
+  return inventoryData.loading ? (
+    <Load />
+  ) : inventoryData.error ? (
+    <h2>{inventoryData.error}</h2>
+  ) : (
+    <div>
+      <h2>Inventory Status</h2>
+      <Div>
+        {inventoryData &&
+          inventoryData.inventory &&
+          inventoryData.inventory.map(inventory => {
+            return (
+              <>
+                <Inventory inventory={inventory} />
+                {/* <button onClick={() => addToCart(product)}>Add To Cart</button> */}
+              </>
+            );
+          })}
+        {console.log("is inventorydata empty? ", inventoryData)}
+        {console.log("is productdata empty? ", productData)}
+      </Div>
+    </div>
+  );
+}
 
 const mapStateToProps = state => {
   return {

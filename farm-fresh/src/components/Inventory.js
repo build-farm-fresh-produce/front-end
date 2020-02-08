@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
+import InventoryList from "./InventoryList";
 
 export default function Inventory() {
-  const [items, setItems] = useState();
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
     axiosWithAuth()
@@ -15,8 +16,7 @@ export default function Inventory() {
   }, []);
   return (
     <div>
-      <h2>INVENTORY</h2>
-      {console.log(items)}
+      <InventoryList />
     </div>
   );
 }
