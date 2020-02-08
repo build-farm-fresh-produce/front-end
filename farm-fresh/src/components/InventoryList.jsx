@@ -25,7 +25,11 @@ function InventoryList({ productData, inventoryData, fetchInventory }) {
         <h2>{inventoryData.error}</h2>
     ) : (
         <div>
+<<<<<<< HEAD
             
+=======
+           
+>>>>>>> a4a589ebbbcb06f5c7a47efdafea071392af3b75
             <h2>Inventory Status</h2>
             <Div>
                 {inventoryData &&

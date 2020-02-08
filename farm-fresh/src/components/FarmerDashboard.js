@@ -8,6 +8,7 @@ import FarmerInventory from './farmer/FarmerInventory';
 
 export default function Farmer() {
   let id = localStorage.getItem("farmId");
+  let name = localStorage.getItem('userId')
   const [farmer, setFarmer] = useState({});
   useEffect(() => {
     axiosWithAuth()
@@ -24,7 +25,7 @@ export default function Farmer() {
   return (
   <Container className="dashboard">
       {/* <NavigationFarmer /> */}
-      <h1>Farmer's Dashboard</h1>
+      <h1>Welcome, {name}</h1>
       <div className="info">
 
         <p>Farm Name: {farmer.farm_name}</p>

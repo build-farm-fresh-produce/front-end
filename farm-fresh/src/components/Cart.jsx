@@ -47,6 +47,7 @@ function Cart({ cart, totalCost, removeFromCart, increaseQuantity, decreaseQuant
                 <button onClick={() => clearCart(cart)}>Clear Cart</button>
                 <button onClick={() => {
                 completeOrder(cart);
+               
                 clearCart(cart);
                 }}>Complete Order</button>
             </div>
