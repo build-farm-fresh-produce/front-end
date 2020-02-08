@@ -5,7 +5,14 @@ import NavigationFarmer from "./NavigationFarmer";
 import Inventory from "./Inventory";
 import Orders from "./Orders";
 
+import styled from "styled-components";
+
 export default function Farmer() {
+  const Page = styled.div`
+    width: 900px;
+    margin: 0 auto;
+  `;
+
   let id = localStorage.getItem("farmId");
   const [farmer, setFarmer] = useState({});
   useEffect(() => {
@@ -23,23 +30,24 @@ export default function Farmer() {
   return (
     <div>
       <NavigationFarmer />
+      <Page>
+        <h1>Farmer's Dashboard</h1>
+        <div className="info">
+          <p>Farm Name: {farmer.farm_name}</p>
+          <p>Phone Number: {farmer.phone_number} </p>
+          <p>Email: {farmer.email}</p>
+          <p>Address: {farmer.address}</p>
+          <p>City: {farmer.city}</p>
+          <p>State: {farmer.state}</p>
+          <p>Zip Code: {farmer.zipcode}</p>
+          <Link to={{ pathname: "/edit-info", state: { farmer } }}>
+            Edit Info
+          </Link>
 
-      <h1>Farmer's Dashboard</h1>
-      <div className="info">
-        <p>Farm Name: {farmer.farm_name}</p>
-        <p>Phone Number: {farmer.phone_number} </p>
-        <p>Email: {farmer.email}</p>
-        <p>Address: {farmer.address}</p>
-        <p>City: {farmer.city}</p>
-        <p>State: {farmer.state}</p>
-        <p>Zip Code: {farmer.zipcode}</p>
-        <Link to={{ pathname: "/edit-info", state: { farmer } }}>
-          Edit Info
-        </Link>
-
-        <Route path="/farmer-dashboard/inventory" component={Inventory} />
-        <Route path="/farmer-dashboard/orders" component={Orders} />
-      </div>
+          <Route path="/farmer-dashboard/inventory" component={Inventory} />
+          <Route path="/farmer-dashboard/orders" component={Orders} />
+        </div>
+      </Page>
     </div>
   );
 }
