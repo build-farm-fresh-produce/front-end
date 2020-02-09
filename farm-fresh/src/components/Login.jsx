@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { axiosWithAuth } from "../tools/axiosAuth";
 import styled from "styled-components";
 import Load from "./Loader";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import "../App.css";
 const FormWrap = styled.div`
 background-color: rgba(0,0,0,.3);
@@ -148,7 +148,9 @@ const Login = props => {
             {validation.passwordVal ? <p>You need a password!</p> : ""}
             <button type="submit">Log In!</button>
           </form>
-          <Link className='to-register' to='/register-user'><button>Register</button></Link>
+          <Link className="to-register" to="/register-user">
+            <button>Register</button>
+          </Link>
         </FormWrap>
       )}
     </div>

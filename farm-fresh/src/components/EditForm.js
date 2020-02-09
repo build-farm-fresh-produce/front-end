@@ -1,51 +1,62 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useFormik } from "formik";
-// import * as Yup from "yup";
-import Navigation from "./Navigation";
+import * as Yup from "yup";
+import NavigationFarmer from "./NavigationFarmer";
+import { axiosWithAuth } from "../tools/axiosAuth";
 
-export default function EditForm() {
-  // Notice that we have to initialize ALL of fields with values. These
-  // could come from props, but since we don't want to prefill this form,
-  // we just use an empty string. If you don't do this, React will yell
-  // at you.
-  const formik = useFormik({
-    initialValues: {
-      firstName: "",
-      lastName: "",
-      email: ""
-    },
-    onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-    }
-  });
+export default function EditForm(props) {
+  const farmerInfo = props.location.state.farmer;
+  const [updateInfo, setUpdateInfo] = useState({ ...farmerInfo });
+
+  const formHandler = event => {
+    event.preventDefault();
+  };
+
+  const handleNameChange = event => {
+    // debugger;
+    setUpdateInfo({ ...updateInfo, [event.target.name]: event.target.value });
+    console.dir(event.target);
+  };
+
   return (
-    <div>
-      <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="firstName">First Name</label>
-        <input
-          id="firstName"
-          name="firstName"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.firstName}
-        />
-        <label htmlFor="lastName">Last Name</label>
-        <input
-          id="lastName"
-          name="lastName"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.lastName}
-        />
-        <label htmlFor="email">Email Address</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-        <button type="submit">Submit</button>
+    <div className="edit-form">
+      <h1>Farmer's Dashboard</h1>
+      <div className="info-edit">
+        <p>Farm Name: {updateInfo.farm_name}</p>
+        <p>Phone Number: {farmerInfo.phone_number} </p>
+        <p>Email: {farmerInfo.email}</p>
+        <p>Address: {farmerInfo.address}</p>
+        <p>City: {farmerInfo.city}</p>
+        <p>State: {farmerInfo.state}</p>
+        <p>Zip Code: {farmerInfo.zipcode}</p>
+      </div>
+
+      <form onSubmit={formHandler}>
+        <div>
+          <label>
+            Name
+            <input
+              type="text"
+              name="farm_name"
+              value={updateInfo.farm_name}
+              onChange={handleNameChange}
+              placeholder={updateInfo.farm_name}
+            />
+          </label>
+        </div>
+        <div>
+          <label>
+            Email:
+            <input
+              type="text"
+              name="email"
+              value={updateInfo.email}
+              onChange={handleNameChange}
+              placeholder={updateInfo.email}
+            />
+          </label>
+        </div>
+        <button>Update your !@$#%@</button>
       </form>
     </div>
   );

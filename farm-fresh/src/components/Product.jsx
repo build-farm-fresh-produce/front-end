@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const Div = styled.div`
 width: 60%;
@@ -21,20 +21,17 @@ p{
 }
 
 
-`
-
+`;
 
 const Product = props => {
-    return (
-        <Div>
-            <img src={props.product.image_url} alt={props.product.name}/>
-            <p>{props.product.product_name}</p>
-            <p>{props.product.description}</p>
-            <p>${props.product.price}</p>
-            
-           
-        </Div>
-    );
-}
+  return (
+    <Div>
+      <img src={props.product.image_url} alt={props.product.name} />
+      <p>{props.product.product_name}</p>
+      <p>{props.product.description}</p>
+      <p>${props.product.price}</p>
+    </Div>
+  );
+};
 
 export default Product;
