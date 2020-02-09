@@ -10,6 +10,7 @@ import InventoryList from "./components/InventoryList";
 import FarmerDashboard from "./components/FarmerDashboard";
 import EditForm from "./components/EditForm";
 import Navigation from "./components/Navigation";
+import Orders from "./components/Orders";
 import { Route, Link, Redirect } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
@@ -40,6 +41,7 @@ function App() {
         <PrivateRoute path="/farms" component={Farms} />
         <PrivateRoute path="/cart" component={Cart} />
         <PrivateRoute path="/inventory" component={InventoryList} />
+        <PrivateRoute path="/orders" component={Orders} />
       </div>
     </Router>
   );

@@ -42,9 +42,9 @@ export default function Farmer() {
           <Link to={{ pathname: "/edit-info", state: { farmer } }}>
             Edit Info
           </Link>
-
-          <Route path="/farmer-dashboard/inventory" component={Inventory} />
-          <Route path="/farmer-dashboard/orders" component={Orders} />
+          <Link to={{ pathname: "/orders" }}>Orders</Link>
+          {/* <Route path="/farmer-dashboard/inventory" component={Inventory} />
+          <Route path="/farmer-dashboard/orders" component={Orders} /> */}
         </div>
       </Page>
     </div>

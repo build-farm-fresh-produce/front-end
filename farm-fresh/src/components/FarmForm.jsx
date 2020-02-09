@@ -131,7 +131,6 @@ const FarmForm = props => {
           type="email"
           placeholder="Email"
           onChange={handleChange}
-          //   required
         />
         <div className="setFarmDetails" onClick={submitHandler}>
           <p>Done!</p>
