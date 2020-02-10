@@ -14,6 +14,7 @@ import { Route, Link, Redirect } from "react-router-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 
 
+
 function App() {
   const PrivateRoute = ({ component: Products, ...rest }) => (
     <Route

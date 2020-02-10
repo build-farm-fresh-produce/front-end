@@ -21,8 +21,17 @@ code {
   font-size: 2.3rem;
   padding-top: 10px;
   
+}
+
+@media screen and (max-width: 700px){
+  .navigation{
+    font-size: 1.5rem;
+    height: 60px;
+  }
 
 }
+
+
 
 .nav-link{
   text-decoration: none ;
@@ -85,7 +94,6 @@ a:hover{
   }
 
 }
-
 
 /* Dashboard */
 
