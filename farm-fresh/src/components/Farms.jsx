@@ -11,6 +11,14 @@ const Farms = () => {
         .catch(err => {
             console.log(err);
         })
+
+        axiosWithAuth().get('https://farm-fresh-produce-api.herokuapp.com/api/inventory/')
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => {
+            console.log(err);
+        })
     })
     return (
         <div>
